@@ -1,0 +1,12 @@
+{
+  "include": ["backend"],
+  "typeCheckingMode": "strict",
+  "reportMissingTypeStubs": false,
+  "reportMissingParameterType": true,
+  "reportMissingTypeArgument": true,
+  "reportReturnType": true,
+  "reportUntypedFunctionDecorator": true,
+  "reportUntypedClassDecorator": true,
+  "venvPath": "backend",
+  "venv": "dev"
+}

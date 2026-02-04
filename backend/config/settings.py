@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+import sys
 
 load_dotenv()
 
@@ -85,9 +86,12 @@ DATABASES = {
         "PASSWORD": os.getenv("DB_PASSWORD"),
         "HOST": os.getenv("DB_HOST"),
         "PORT": os.getenv("DB_PORT"),
-        "OPTIONS": {"pool": True},
+        "CONN_MAX_AGE": 600 if "pytest" not in sys.modules else 0,
+        "OPTIONS": {
+            "pool": "pytest" not in sys.modules,
+        },
     },
-    "pogotrackerdb": {
+    "pogotracker_db": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.getenv("POGOTRACKER_DB_NAME"),
         "USER": os.getenv("POGOTRACKER_DB_USER"),

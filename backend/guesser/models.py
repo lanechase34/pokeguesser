@@ -12,6 +12,8 @@ class Pokemon(models.Model):
     name = models.CharField(max_length=50)
     gender = models.CharField(max_length=10)
     live = models.BooleanField()
+    mega = models.BooleanField()
+    giga = models.BooleanField()
     type1 = models.CharField(max_length=10)
     type2 = models.CharField(max_length=10)
     sprite = models.CharField(max_length=50)
@@ -19,7 +21,7 @@ class Pokemon(models.Model):
 
     class Meta:
         managed = False  # Poke Guesser does not manage this table schema
-        db_table = "pokemon"  # Exact table name in pogotrackerdb
+        db_table = "pokemon"  # Exact table name in pogotracker_db
         default_permissions = ()  # Empty permissions - nothing allowed via admin panel
 
     def __str__(self) -> str:
@@ -40,7 +42,7 @@ class DailyPokemon(models.Model):
         db_table = "daily_pokemon"
 
     def get_pokemon(self):
-        """Helper method to fetch Pokemon record from pogotrackerdb"""
+        """Helper method to fetch Pokemon record from pogotracker_db"""
         try:
             return Pokemon.objects.get(id=self.pokemon)
         except Pokemon.DoesNotExist:

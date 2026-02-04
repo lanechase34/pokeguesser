@@ -29,7 +29,8 @@
     "**/__pycache__/": true,
     "**/.git": true,
     "backend/dev/**": true,
-    "**/.ruff_cache": true
+    "**/.ruff_cache": true,
+    "**/.pytest_cache/": true
   },
   "workbench.tree.enableStickyScroll": false,
   "editor.stickyScroll.enabled": false,
@@ -42,5 +43,21 @@
   "python.terminal.activateEnvironment": true,
   "python.envFile": "${workspaceFolder}/backend/.env",
   "ruff.enable": true,
-  "editor.tabSize": 4
+  "editor.tabSize": 4,
+  "terminal.integrated.profiles.windows": {
+    "PowerShell": {
+      "path": "pwsh.exe",
+      "args": [
+        "-NoLogo",
+        "-NoExit",
+        "-Command",
+        "& ${workspaceFolder}/backend/dev/Scripts/Activate.ps1"
+      ]
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "python.testing.pytestEnabled": true,
+  "python.testing.cwd": "${workspaceFolder}/backend",
+  "python.testing.pytestArgs": ["-s"],
+  "python.testing.unittestEnabled": false
 }

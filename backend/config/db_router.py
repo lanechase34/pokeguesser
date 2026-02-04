@@ -6,19 +6,19 @@ class DatabaseRouter:
     """
     Route database operations based on model.
     DailyPokemon -> default (guesser db)
-    Pokemon -> read-only from dbpogotracker
+    Pokemon -> read-only from pogotracker_db
     """
 
     def db_for_read(self, model: type[models.Model], **hints: Any) -> str:
         """Route reads"""
-        if model._meta.app_label == "pokemon" and model._meta.model_name == "pokemon":
-            return "dbpogotracker"
+        if model._meta.app_label == "guesser" and model._meta.model_name == "pokemon":
+            return "pogotracker_db"
         return "default"
 
     def db_for_write(self, model: type[models.Model], **hints: Any) -> str | None:
         """Route writes"""
-        if model._meta.app_label == "pokemon" and model._meta.model_name == "pokemon":
-            return None  # prevent any writes to pogotrackerdb
+        if model._meta.app_label == "guesser" and model._meta.model_name == "pokemon":
+            return None  # prevent any writes to pogotracker_db
         return "default"
 
     def allow_relation(

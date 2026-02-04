@@ -1,2 +1,4 @@
 black==26.1.0
 ruff==0.14.14
+pytest==9.0.2
+pytest-django==4.11.1

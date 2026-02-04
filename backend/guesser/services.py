@@ -1,5 +1,4 @@
 from __future__ import annotations
-from django.db.models import OuterRef, Exists
 from datetime import date
 from django.db import transaction
 from .models import Pokemon, DailyPokemon
@@ -77,16 +76,21 @@ class GuesserService:
             PK of random usused pokemon
         """
 
-        # Subquery to check if Pokemon exists in DailyPokemon
-        used_pokemon_subquery = DailyPokemon.objects.filter(pokemon=OuterRef("id"))
+        # Get a list of used pokemon ids
+        used_pokemon_ids: list[int] = list(
+            DailyPokemon.objects.values_list("pokemon", flat=True)
+        )
 
-        # Get Pokemon that have not been selected (similar to LEFT OUTER JOIN WHERE NULL)
-        available_pokemon = Pokemon.objects.annotate(
-            has_been_used=Exists(used_pokemon_subquery)
-        ).filter(
-            has_been_used=False,
-            live=True,  # only select live pokemon
-            gender="",  # avoid gender-specific species
+        # Query Pokemon from pogotracker_db, excluding used IDs
+        available_pokemon = (
+            Pokemon.objects.filter(
+                live=True,  # only select live pokemon
+                mega=False,
+                giga=False,
+                gender="",  # avoid gender-specific species
+            )
+            .exclude(name__icontains="unown")  # Exclude unown
+            .exclude(id__in=used_pokemon_ids)
         )
 
         # Select a random pokemon

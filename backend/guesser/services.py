@@ -3,7 +3,7 @@ from datetime import date
 from django.db import transaction
 from .models import Pokemon, DailyPokemon
 from audit.services import AuditService
-from typing import TypedDict
+from typing import TypedDict, Dict
 
 
 class TodaysPokemonResult(TypedDict):
@@ -14,6 +14,7 @@ class TodaysPokemonResult(TypedDict):
 class GuessResult(TypedDict):
     correct: bool
     guessed_pokemon: Pokemon | None
+    hints: list[Dict[str, str]]
 
 
 class GuesserService:
@@ -50,7 +51,7 @@ class GuesserService:
                 AuditService.log(
                     app_name="guesser",
                     event_type="CREATE_RANDOM_POKEMON",
-                    message=f"Created new pokemon {daily_pokemon.pokemon} for {target_date}",
+                    message=f"Created new pokemon {daily_pokemon.pokemon_name} for {target_date}",
                     triggered_by=triggered_by,
                 )
             return daily_pokemon
@@ -178,7 +179,16 @@ class GuesserService:
             )
             return None
 
-        result: GuessResult = {"correct": False, "guessed_pokemon": None}
+        result: GuessResult = {
+            "correct": False,
+            "guessed_pokemon": None,
+            "hints": [
+                {"Type1": today["pokemon"].type1, "Type2": today["pokemon"].type2},
+                {"Generation": today["pokemon"].generation},
+                {},
+            ],
+        }
+
         # Look up the guessed pokemon by name (case-insensitive)
         try:
             guessed_pokemon = Pokemon.objects.get(name__iexact=guess_name)

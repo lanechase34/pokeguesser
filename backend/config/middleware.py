@@ -32,8 +32,6 @@ class RequestContextMiddleware:
         _request_context.ip_address = self._get_client_ip(request)
         _request_context.user_agent = request.META.get("HTTP_USER_AGENT", "")
 
-        response = self.get_response(request)
-
         try:
             response = self.get_response(request)
         finally:

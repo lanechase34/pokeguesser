@@ -46,7 +46,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "audit.middleware.RequestContextMiddleware",
+    "config.middleware.RequestContextMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -74,6 +74,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
+APPEND_SLASH = False
+URL_FORMAT_OVERRIDE = None
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
@@ -86,7 +88,7 @@ DATABASES = {
         "PASSWORD": os.getenv("DB_PASSWORD"),
         "HOST": os.getenv("DB_HOST"),
         "PORT": os.getenv("DB_PORT"),
-        "CONN_MAX_AGE": 600 if "pytest" not in sys.modules else 0,
+        "CONN_MAX_AGE": 0,
         "OPTIONS": {
             "pool": "pytest" not in sys.modules,
         },
@@ -98,6 +100,7 @@ DATABASES = {
         "PASSWORD": os.getenv("POGOTRACKER_DB_PASSWORD"),
         "HOST": os.getenv("POGOTRACKER_DB_HOST"),
         "PORT": os.getenv("POGOTRACKER_DB_PORT"),
+        "CONN_MAX_AGE": 0,
         "OPTIONS": {"pool": True},
     },
 }
@@ -105,6 +108,12 @@ DATABASES = {
 # Determine which models go to which database
 DATABASE_ROUTERS = ["config.db_router.DatabaseRouter"]
 
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "cache_table",
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators

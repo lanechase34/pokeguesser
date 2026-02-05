@@ -28,9 +28,16 @@ deactivate
 
    `pip install -r requirements-dev.txt`
 
+Start server
+
+python manage.py runserver
+
 ## PIP
 
 check updates `pip list --outdated`
+
+Init cache table?
+`python manage.py createcachetable cache_table`
 
 ### Database overview
 

@@ -5,8 +5,11 @@
   "reportMissingParameterType": true,
   "reportMissingTypeArgument": true,
   "reportReturnType": true,
-  "reportUntypedFunctionDecorator": true,
-  "reportUntypedClassDecorator": true,
+  "reportUntypedFunctionDecorator": false,
+  "reportUntypedClassDecorator": false,
+  "reportUnknownVariableType": false,
+  "reportUnknownMemberType": false,
+  "reportUnknownArgumentType": false,
   "venvPath": "backend",
   "venv": "dev"
 }

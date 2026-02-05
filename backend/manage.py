@@ -21,9 +21,11 @@ def main():
         ) from exc
 
     # Set the port to run the server
-    if len(sys.argv) > 1 and sys.argv[1] == "runserver":
-        port = os.getenv("HTTP_PORT", "8080")
-        sys.argv.append(f"0.0.0.0:{port}")
+    if len(sys.argv) >= 2 and sys.argv[1] == "runserver":
+        # Only add address if not already provided
+        if len(sys.argv) == 2:
+            port = os.getenv("HTTP_PORT", "8085")
+            sys.argv.append(f"0.0.0.0:{port}")
 
     execute_from_command_line(sys.argv)
 

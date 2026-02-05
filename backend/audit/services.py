@@ -1,6 +1,6 @@
 from .models import AuditLog
 from typing import Literal
-from .middleware import get_request_context
+from config.middleware import get_request_context
 import traceback
 
 AuditLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]

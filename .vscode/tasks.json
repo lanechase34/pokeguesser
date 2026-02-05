@@ -15,6 +15,19 @@
       "problemMatcher": []
     },
     {
+      "label": "Type Check Python Files",
+      "type": "shell",
+      "command": "${workspaceFolder}/backend/dev/Scripts/python.exe -m pyright",
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "shell": {
+          "executable": "powershell.exe",
+          "args": []
+        }
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "Format Python Files",
       "type": "shell",
       "command": "${workspaceFolder}/backend/dev/Scripts/python.exe -m ruff format .",

@@ -30,7 +30,8 @@
     "**/.git": true,
     "backend/dev/**": true,
     "**/.ruff_cache": true,
-    "**/.pytest_cache/": true
+    "**/.pytest_cache/": true,
+    "**/__init__.py": true
   },
   "workbench.tree.enableStickyScroll": false,
   "editor.stickyScroll.enabled": false,

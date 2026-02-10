@@ -1,64 +1,72 @@
 {
-  "workbench.iconTheme": "material-icon-theme",
-  "editor.formatOnSave": true,
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[yaml]": {
-    "editor.defaultFormatter": "redhat.vscode-yaml"
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[python]": {
-    "editor.defaultFormatter": "charliermarsh.ruff"
-  },
-  "files.exclude": {
-    "**/__pycache__/": true,
-    "**/.git": true,
-    "backend/dev/**": true,
-    "**/.ruff_cache": true,
-    "**/.pytest_cache/": true,
-    "**/__init__.py": true
-  },
-  "workbench.tree.enableStickyScroll": false,
-  "editor.stickyScroll.enabled": false,
-  "terminal.integrated.stickyScroll.enabled": false,
-  "prettier.trailingComma": "es5",
-  "github.copilot.enable": {
-    "*": false
-  },
-  "python.defaultInterpreterPath": "${workspaceFolder}/backend/dev/Scripts/python.exe",
-  "python.terminal.activateEnvironment": true,
-  "python.envFile": "${workspaceFolder}/backend/.env",
-  "ruff.enable": true,
-  "editor.tabSize": 4,
-  "terminal.integrated.profiles.windows": {
-    "PowerShell": {
-      "path": "pwsh.exe",
-      "args": [
-        "-NoLogo",
-        "-NoExit",
-        "-Command",
-        "& ${workspaceFolder}/backend/dev/Scripts/Activate.ps1"
-      ]
+    "workbench.iconTheme": "material-icon-theme",
+    "editor.formatOnSave": true,
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[nginx]": {
+        "editor.defaultFormatter": "raynigon.nginx-formatter"
+    },
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    "files.exclude": {
+        "**/__pycache__/": true,
+        "**/.git": true,
+        "backend/dev/**": true,
+        "**/.ruff_cache": true,
+        "**/.pytest_cache/": true,
+        "**/__init__.py": true,
+        "frontend/node_modules/": true
+    },
+    "prettier.tabWidth": 4,
+    "prettier.singleQuote": true,
+    "prettier.printWidth": 120,
+    "workbench.tree.enableStickyScroll": false,
+    "editor.stickyScroll.enabled": false,
+    "terminal.integrated.stickyScroll.enabled": false,
+    "prettier.trailingComma": "es5",
+    "github.copilot.enable": {
+        "*": false
+    },
+    "python.defaultInterpreterPath": "${workspaceFolder}/backend/dev/Scripts/python.exe",
+    "python.terminal.activateEnvironment": true,
+    "python.envFile": "${workspaceFolder}/backend/.env",
+    "ruff.enable": true,
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "path": "pwsh.exe",
+            "args": ["-NoLogo", "-NoExit", "-Command", "& ${workspaceFolder}/backend/dev/Scripts/Activate.ps1"]
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "python.testing.pytestEnabled": true,
+    "python.testing.cwd": "${workspaceFolder}/backend",
+    "python.testing.pytestArgs": ["-s"],
+    "python.testing.unittestEnabled": false,
+    "eslint.options": {
+        "overrideConfigFile": "./eslint.config.ts"
+    },
+    "jest.runMode": {
+        "type": "on-save",
+        "testFileOnly": true
     }
-  },
-  "terminal.integrated.defaultProfile.windows": "PowerShell",
-  "python.testing.pytestEnabled": true,
-  "python.testing.cwd": "${workspaceFolder}/backend",
-  "python.testing.pytestArgs": ["-s"],
-  "python.testing.unittestEnabled": false
 }

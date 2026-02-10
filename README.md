@@ -24,9 +24,9 @@ deactivate
 
 4. Install dependencies
 
-   `pip install -r requirements.txt`
+    `pip install -r requirements.txt`
 
-   `pip install -r requirements-dev.txt`
+    `pip install -r requirements-dev.txt`
 
 Start server
 
@@ -67,26 +67,30 @@ Init cache table?
 
 - Use shell to query and inspect records
   `python manage.py shell`
-  - select a record for example:
+    - select a record for example:
 
-  ```
-  from guesser.models import DailyPokemon, Pokemon
-  from datetime import date
+    ```
+    from guesser.models import DailyPokemon, Pokemon
+    from datetime import date
 
-  # Get today's DailyPokemon
-  daily = DailyPokemon.objects.get(date=date.today())
+    # Get today's DailyPokemon
+    daily = DailyPokemon.objects.get(date=date.today())
 
-  # View the record
-  print(f"Date: {daily.date}")
-  print(f"Pokemon ID: {daily.pokemon}")
-  print(f"Created: {daily.created}")
+    # View the record
+    print(f"Date: {daily.date}")
+    print(f"Pokemon ID: {daily.pokemon}")
+    print(f"Created: {daily.created}")
 
-  # Get the actual Pokemon it refers to
-  pokemon = daily.get_pokemon()
-  print(f"Pokemon Name: {pokemon.name}")
-  print(f"Pokemon Number: {pokemon.number}")
-  print(f"Type: {pokemon.type1}/{pokemon.type2}")
+    # Get the actual Pokemon it refers to
+    pokemon = daily.get_pokemon()
+    print(f"Pokemon Name: {pokemon.name}")
+    print(f"Pokemon Number: {pokemon.number}")
+    print(f"Type: {pokemon.type1}/{pokemon.type2}")
 
-  # Or use the string representation
-  print(str(daily))
-  ```
+    # Or use the string representation
+    print(str(daily))
+    ```
+
+    image magick make black silhoutte of image
+
+    `magick input.png -channel RGB -evaluate set 0 +channel output.png`

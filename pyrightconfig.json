@@ -1,15 +1,15 @@
 {
-  "include": ["backend"],
-  "typeCheckingMode": "strict",
-  "reportMissingTypeStubs": false,
-  "reportMissingParameterType": true,
-  "reportMissingTypeArgument": true,
-  "reportReturnType": true,
-  "reportUntypedFunctionDecorator": false,
-  "reportUntypedClassDecorator": false,
-  "reportUnknownVariableType": false,
-  "reportUnknownMemberType": false,
-  "reportUnknownArgumentType": false,
-  "venvPath": "backend",
-  "venv": "dev"
+    "include": ["backend"],
+    "typeCheckingMode": "strict",
+    "reportMissingTypeStubs": false,
+    "reportMissingParameterType": true,
+    "reportMissingTypeArgument": true,
+    "reportReturnType": true,
+    "reportUntypedFunctionDecorator": false,
+    "reportUntypedClassDecorator": false,
+    "reportUnknownVariableType": false,
+    "reportUnknownMemberType": false,
+    "reportUnknownArgumentType": false,
+    "venvPath": "backend",
+    "venv": "dev"
 }

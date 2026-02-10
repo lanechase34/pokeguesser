@@ -89,6 +89,7 @@ class GuesserService:
                 mega=False,
                 giga=False,
                 gender="",  # avoid gender-specific species
+                generation=1,  # locked to gen1 only
             )
             .exclude(name__icontains="unown")  # Exclude unown
             .exclude(id__in=used_pokemon_ids)

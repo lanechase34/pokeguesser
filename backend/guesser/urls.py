@@ -5,6 +5,6 @@ from .views import GuessView, QuestionView
 app_name = "guesser"
 
 urlpatterns = [
-    path("guesser/question", QuestionView.as_view(), name="question"),
-    path("guesser/guess", GuessView.as_view(), name="guess"),
+    path("question", QuestionView.as_view(), name="question"),
+    path("guess", GuessView.as_view(), name="guess"),
 ]

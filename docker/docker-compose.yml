@@ -1,0 +1,65 @@
+name: "PokeGuesser"
+networks:
+    pokeguesser_network:
+        driver: bridge
+services:
+    pokeguesser_db:
+        image: postgres:16
+        container_name: pokeguesser_db
+        environment:
+            POSTGRES_DB: pokeguesser_db
+            POSTGRES_USER: docker_user1234
+            POSTGRES_PASSWORD: docker_pass1234
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+        networks:
+            - pokeguesser_network
+        healthcheck:
+            test:
+                ["CMD-SHELL", "pg_isready -U docker_user1234 -d pokeguesser_db"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    pokeguesser_backend:
+        build:
+            context: ../backend
+            dockerfile: ../docker/backend_Dockerfile
+        container_name: pokeguesser_backend
+        command: sh -c "python manage.py migrate && python manage.py runserver"
+        volumes:
+            - ../backend:/app
+        ports:
+            - "8085:8085"
+        networks:
+            pokeguesser_network:
+                aliases:
+                    - backend
+        env_file:
+            - ../backend/.env
+        depends_on:
+            pokeguesser_db:
+                condition: service_healthy
+
+    pokeguesser_frontend:
+        build:
+            context: ../frontend
+            dockerfile: ../docker/frontend_Dockerfile
+        container_name: pokeguesser_frontend
+        command: npm start
+        volumes:
+            - ../frontend:/app
+            - /app/node_modules
+        ports:
+            - "3001:3001"
+        networks:
+            - pokeguesser_network
+        environment:
+            - VITE_API_TARGET=http://backend:8085
+        depends_on:
+            - pokeguesser_backend
+
+volumes:
+    postgres_data:

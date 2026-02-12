@@ -84,7 +84,7 @@ class QuestionViewTest(APITestCase):
     def setUp(self):
         """Set up test fixtures."""
         self.client = APIClient()
-        self.url = "/api/v1/guesser/question"
+        self.url = "/api/v1/question"
 
         # Create test Pokemon
         self.pokemon = Pokemon.objects.create(
@@ -151,7 +151,7 @@ class GuessViewTest(APITestCase):
     def setUp(self):
         """Set up test fixtures."""
         self.client = APIClient()
-        self.url = "/api/v1/guesser/guess"
+        self.url = "/api/v1/guess"
 
         # Create test Pokemon
         self.correct_pokemon = Pokemon.objects.create(
@@ -409,7 +409,7 @@ class ThrottleEnforcementTest(APITestCase):
     def setUp(self):
         """Set up test fixtures."""
         self.client = APIClient()
-        self.url = "/api/v1/guesser/guess"
+        self.url = "/api/v1/guess"
 
         self.pokemon = Pokemon.objects.create(
             id=1,
@@ -518,7 +518,7 @@ class RaceConditionTest(APITestCase):
     def setUp(self):
         """Set up test fixtures."""
         self.client = APIClient()
-        self.url = "/api/v1/guesser/guess"
+        self.url = "/api/v1/guess"
 
         self.pokemon = Pokemon.objects.create(
             id=1,
@@ -613,7 +613,7 @@ class EdgeCaseTest(APITestCase):
     def setUp(self):
         """Set up test fixtures."""
         self.client = APIClient()
-        self.url = "/api/v1/guesser/guess"
+        self.url = "/api/v1/guess"
 
         self.pokemon = Pokemon.objects.create(
             id=1,
@@ -747,7 +747,7 @@ class CacheBackendTest(APITestCase):
     def setUp(self):
         """Set up test fixtures."""
         self.client = APIClient()
-        self.url = "/api/v1/guesser/guess"
+        self.url = "/api/v1/guess"
 
         self.pokemon = Pokemon.objects.create(
             id=1,

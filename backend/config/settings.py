@@ -15,7 +15,11 @@ from dotenv import load_dotenv
 import os
 import sys
 
-load_dotenv()
+# Determine which .env file to load
+ENV = os.getenv("DJANGO_ENV", "local")  # Default to 'local'
+env_file = f".env.{ENV}"
+
+load_dotenv(env_file)
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,7 +32,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False")
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend']
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "backend"]
 
 # Application definition
 

@@ -8,6 +8,8 @@ backend/dev/**
 .env
 env/
 backend/.env
+backend/.env.**
+!backend/.env.example
 .secrets
 
 frontend/node_modules/*

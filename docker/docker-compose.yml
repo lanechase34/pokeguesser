@@ -10,6 +10,8 @@ services:
             POSTGRES_DB: pokeguesser_db
             POSTGRES_USER: docker_user1234
             POSTGRES_PASSWORD: docker_pass1234
+        ports:
+            - "5434:5432"
         volumes:
             - pokeguesser_data:/var/lib/postgresql/data
         networks:
@@ -28,6 +30,8 @@ services:
             POSTGRES_DB: pokeguesser_pogotracker_db
             POSTGRES_USER: pogo_docker_user1234
             POSTGRES_PASSWORD: pogo_docker_pass1234
+        ports:
+            - "5433:5432"
         volumes:
             - pogotracker_data:/var/lib/postgresql/data
             - ./pogotracker_seed:/docker-entrypoint-initdb.d
@@ -57,8 +61,10 @@ services:
             pokeguesser_network:
                 aliases:
                     - backend
+        environment:
+            - DJANGO_ENV=docker
         env_file:
-            - ../backend/.env
+            - ../backend/.env.docker
         depends_on:
             pokeguesser_db:
                 condition: service_healthy

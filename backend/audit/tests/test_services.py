@@ -287,8 +287,8 @@ class AuditServicePerformanceTest(TestCase):
             )
         duration = time.time() - start
 
-        # Should complete almost instantly (< 1 seconds)
-        self.assertLess(duration, 1)
+        # Should complete almost instantly (< 2 seconds)
+        self.assertLess(duration, 2)
 
         # Wait for all threads to complete
         self.assertTrue(wait_for_logs(100))

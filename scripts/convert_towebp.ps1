@@ -1,6 +1,6 @@
 # convert images to webp format
 
-cd frontend\public\silhouettes
+cd frontend\public\images
 
 Get-ChildItem *.png | ForEach-Object {
     $webpName = $_.BaseName + ".webp"

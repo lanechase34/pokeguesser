@@ -21,7 +21,7 @@
         "paths": {
             "@test-utils": ["./test-utils.tsx"]
         },
-        "types": ["vite/client", "node"]
+        "types": ["vite/client", "node", "jest"]
     },
     "include": ["src/**/*", "eslint.config.ts"]
 }

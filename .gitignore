@@ -6,6 +6,7 @@ backend/dev/**
 .ruff_cache/**
 
 .env
+env/
 backend/.env
 .secrets
 

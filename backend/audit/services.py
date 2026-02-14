@@ -1,9 +1,11 @@
-from .models import AuditLog
-from typing import Optional
-from config.middleware import get_request_context
-import traceback
-import threading
 import logging
+import threading
+import traceback
+from typing import Optional
+
+from config.middleware import get_request_context
+
+from .models import AuditLog
 
 logger = logging.getLogger(__name__)
 

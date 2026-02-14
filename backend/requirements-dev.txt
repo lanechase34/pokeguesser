@@ -1,7 +1,16 @@
-black==26.1.0
-ruff==0.14.14
-pytest==9.0.2
-pytest-django==4.11.1
-djangorestframework-stubs==3.16.8
+# Formatting + Linting
+isort==7.0.0
+ruff==0.15.1
+
+# Type checking
 pyright==1.1.408
 django-stubs==5.2.9
+djangorestframework-stubs==3.16.8
+mypy==1.19.1
+
+# Testing
+pytest==9.0.2
+pytest-django==4.11.1
+pytest-cov==7.0.0
+
+psycopg-binary==3.3.2

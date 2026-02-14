@@ -1,8 +1,11 @@
 from __future__ import annotations
+
 import argparse
 from datetime import datetime
+
 from django.core.management.base import BaseCommand
 from django.utils import timezone
+
 from guesser.services import GuesserService
 
 
@@ -28,7 +31,8 @@ class Command(BaseCommand):
 
             self.stdout.write(
                 self.style.SUCCESS(
-                    f"Selected pokemon ID {daily_pokemon.pokemon} for {daily_pokemon.date}"
+                    f"Selected pokemon ID {daily_pokemon.pokemon}"
+                    f"for {daily_pokemon.date}"
                 )
             )
 

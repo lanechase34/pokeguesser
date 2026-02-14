@@ -1,11 +1,14 @@
 from __future__ import annotations
+
 import argparse
-import subprocess
-from django.core.management.base import BaseCommand
-from pathlib import Path
-from guesser.models import Pokemon
-from dotenv import load_dotenv
 import os
+import subprocess
+from pathlib import Path
+
+from django.core.management.base import BaseCommand
+from dotenv import load_dotenv
+
+from guesser.models import Pokemon
 
 load_dotenv()
 
@@ -84,7 +87,8 @@ class Command(BaseCommand):
             if not source_path.exists():
                 self.stdout.write(
                     self.style.WARNING(
-                        f"Image not found: {source_filename} ({pokemon_name}, ID {pokemon_id})"
+                        f"Image not found: {source_filename} ({pokemon_name}, "
+                        f"ID {pokemon_id})"
                     )
                 )
                 not_found_count += 1
@@ -98,7 +102,8 @@ class Command(BaseCommand):
             if silhouette_path.exists():
                 self.stdout.write(
                     self.style.WARNING(
-                        f"Silhouette already exists: {silhouette_filename} ({pokemon_name})"
+                        f"Silhouette already exists: "
+                        f"{silhouette_filename} ({pokemon_name})"
                     )
                 )
                 skipped_count += 1
@@ -124,7 +129,9 @@ class Command(BaseCommand):
                 )
                 self.stdout.write(
                     self.style.SUCCESS(
-                        f"Generated silhouette: {source_filename} -> {silhouette_filename} ({pokemon_name}, ID {pokemon_id})"
+                        f"Generated silhouette: "
+                        f"{source_filename} -> {silhouette_filename} "
+                        f"({pokemon_name}, ID {pokemon_id})"
                     )
                 )
                 silhouette_count += 1
@@ -138,7 +145,8 @@ class Command(BaseCommand):
             except Exception as e:
                 self.stdout.write(
                     self.style.ERROR(
-                        f"Unexpected error generating silhouette for {source_filename}: {str(e)}"
+                        f"Unexpected error generating silhouette"
+                        f" for {source_filename}: {str(e)}"
                     )
                 )
                 error_count += 1

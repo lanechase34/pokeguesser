@@ -1,10 +1,13 @@
 from __future__ import annotations
-from unittest.mock import patch, MagicMock
-from datetime import date, timedelta
+
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import date, timedelta
+from unittest.mock import MagicMock, patch
+
 import pytest
-from guesser.models import Pokemon, DailyPokemon
-from guesser.services import GuesserService, TodaysPokemonResult, GuessResult
+
+from guesser.models import DailyPokemon, Pokemon
+from guesser.services import GuesserService, GuessResult, TodaysPokemonResult
 
 
 # create_random_pokemon()
@@ -156,7 +159,10 @@ class TestGetRandomUnusedPokemonId:
     def test_does_not_return_same_pokemon_twice_across_calls(
         self, live_pokemon: list[Pokemon]
     ) -> None:
-        """Calling repeatedly should never return a pokemon that's already been assigned"""
+        """
+        Calling repeatedly should never return a
+        pokemon that's already been assigned
+        """
         selected_ids: list[int] = []
         for i in range(len(live_pokemon)):
             pokemon_id: int = GuesserService._get_random_unused_pokemon_id()  # type: ignore[attr-defined]
@@ -257,10 +263,12 @@ class TestCheckGuess:
         assert result_upper is not None
         assert result_upper["correct"] is True
 
+    # MagicMock - fake above the 'patch' method each call with what arguments
+    # (like createMock())
     @patch("guesser.services.AuditService.log")
     def test_logs_on_correct_guess(
         self,
-        mock_log: MagicMock,  # fake above that records each call with what arguments (like createMock())
+        mock_log: MagicMock,
         today_pokemon: DailyPokemon,
         live_pokemon: list[Pokemon],
     ) -> None:
@@ -357,7 +365,8 @@ class TestRaceConditions:
         """
         Fire off multiple threads all trying to create a DailyPokemon for
         the same date at the same time.
-        Exactly one row should exist at the end and no unhandled exceptions should escape.
+        Exactly one row should exist at the end and no unhandled
+        exceptions should escape.
         """
         target: date = date.today() + timedelta(days=30)
         results: list[DailyPokemon] = []

@@ -1,7 +1,9 @@
-from django_cron import CronJobBase, Schedule
-from .services import GuesserService
-from datetime import date, timedelta
 import logging
+from datetime import date, timedelta
+
+from django_cron import CronJobBase, Schedule
+
+from .services import GuesserService
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +23,8 @@ class SelectDailyPokemonCron(CronJobBase):
                 triggered_by="cron",
             )
             logger.info(
-                f"Cron selected daily pokemon: {daily_pokemon.pokemon} for {daily_pokemon.date}"
+                f"Cron selected daily pokemon: {daily_pokemon.pokemon} "
+                f"for {daily_pokemon.date}"
             )
         except Exception as e:
             logger.error(f"Cron failed to select daily pokemon: {e}", exc_info=True)

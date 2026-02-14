@@ -1,0 +1,37 @@
+[tool.mypy]
+python_version = "3.13"
+plugins = ["mypy_django_plugin.main"]
+strict = true
+warn_unused_ignores = true
+warn_return_any = true
+warn_unused_configs = true
+no_implicit_optional = true
+
+[tool.ruff]
+line-length = 88
+target-version = "py313"
+extend-exclude = ["migrations"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "DJ",  # flake8-django
+]
+ignore = [
+    "E203", # whitespace before ':'
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+"settings.py" = ["E501"]
+
+[tool.django-stubs]
+django_settings_module = "config.settings"

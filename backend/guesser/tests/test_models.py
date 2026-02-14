@@ -1,9 +1,12 @@
 from __future__ import annotations
+
 from datetime import date, timedelta
+
 import pytest
 from django.db import IntegrityError
 from django.utils import timezone
-from guesser.models import Pokemon, DailyPokemon
+
+from guesser.models import DailyPokemon, Pokemon
 
 
 # Pokemon Model Tests

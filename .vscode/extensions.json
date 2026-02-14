@@ -1,13 +1,15 @@
 {
-  "recommendations": [
-    "ms-python.black-formatter",
-    "ms-python.python",
-    "ms-vscode-remote.remote-wsl",
-    "mhutchie.git-graph",
-    "eamodio.gitlens",
-    "esbenp.prettier-vscode",
-    "charliermarsh.ruff",
-    "batisteo.vscode-django",
-    "orta.vscode-jest"
-  ]
+    "recommendations": [
+        "ms-python.python",
+        "ms-vscode-remote.remote-wsl",
+        "mhutchie.git-graph",
+        "eamodio.gitlens",
+        "esbenp.prettier-vscode",
+        "charliermarsh.ruff",
+        "batisteo.vscode-django",
+        "orta.vscode-jest",
+        "raynigon.nginx-formatter",
+        "ms-python.vscode-pylance",
+        "ms-python.isort"
+    ]
 }

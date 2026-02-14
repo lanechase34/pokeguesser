@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 from django.db import models
 
 
@@ -41,6 +42,9 @@ class DailyPokemon(models.Model):
     class Meta:
         db_table = "daily_pokemon"
 
+    def __str__(self) -> str:
+        return f"{self.date} - {self.pokemon_name}"
+
     def get_pokemon(self):
         """Helper method to fetch Pokemon record from pogotracker_db"""
         try:
@@ -53,6 +57,3 @@ class DailyPokemon(models.Model):
         """Quick access to pokemon name"""
         poke = self.get_pokemon()
         return poke.name if poke else None
-
-    def __str__(self) -> str:
-        return f"{self.date} - {self.pokemon_name}"

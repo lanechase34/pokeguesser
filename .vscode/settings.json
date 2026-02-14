@@ -32,7 +32,8 @@
         "**/.ruff_cache": true,
         "**/.pytest_cache/": true,
         "**/__init__.py": true,
-        "frontend/node_modules/": true
+        "frontend/node_modules/": true,
+        "**/.mypy_cache/": true
     },
     "workbench.tree.enableStickyScroll": false,
     "editor.stickyScroll.enabled": false,

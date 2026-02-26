@@ -37,5 +37,5 @@ class AuditLog(models.Model):
             models.Index(fields=["timestamp", "level"]),
         ]
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.timestamp} - {self.app_name}.{self.event_type} - {self.level}"

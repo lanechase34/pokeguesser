@@ -102,3 +102,25 @@ Copy the docker/.env.testing.example to /backend/.env.test
 This will allow tests to run locally and connect to docker containers
 
 Test database will automatically be created as 'test_pokeguesser'
+
+### Python dev
+
+Type check files using mypy
+
+Run task -> Type Check Python Files
+
+Format using ruff
+
+Run Task -> Format Python Files
+
+Lint using ruff
+
+Run Task -> Lint Python Files
+
+Pre-commit formatting, linting, and type checking. Setup githooks by running
+
+`pre-commit install`
+
+To run before commit, use
+
+`pre-commit run --all-files`

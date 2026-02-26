@@ -1,3 +1,5 @@
+pre-commit==4.5.1
+
 # Formatting + Linting
 isort==7.0.0
 ruff==0.15.1

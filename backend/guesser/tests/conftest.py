@@ -49,8 +49,9 @@ def clear_test_data_between_tests(db: None) -> Generator[None, None, None]:
     @pytest.mark.django_db(transaction=True)
     """
     yield
-    from guesser.models import DailyPokemon, Pokemon
     from django.core.cache import cache
+
+    from guesser.models import DailyPokemon, Pokemon
 
     DailyPokemon.objects.all().delete()
     Pokemon.objects.all().delete()

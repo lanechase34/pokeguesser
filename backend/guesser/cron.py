@@ -13,7 +13,7 @@ class SelectDailyPokemonCron(CronJobBase):
     schedule = Schedule(run_at_times=RUN_AT_TIMES)
     code = "pokemon.select_daily_pokemon"
 
-    def do(self):
+    def do(self) -> None:
         """
         Automatically select next day's pokemon every night
         """

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from datetime import date, datetime, timedelta
-from typing import Dict, TypedDict
+from typing import Dict, TypedDict, cast
 
 from django.core.cache import cache
 from django.db import transaction
@@ -143,22 +143,25 @@ class GuesserService:
         # If available, return cached result
         cached = cache.get(cache_key)
         if cached is not None:
-            return cached
+            return cast(TodaysPokemonResult, cached)
 
         # Select DailyPokemon based on today's date
+        daily_pokemon: DailyPokemon
         try:
-            daily_pokemon: DailyPokemon = DailyPokemon.objects.get(date=target_date)
+            daily_pokemon = DailyPokemon.objects.get(date=target_date)
         except DailyPokemon.DoesNotExist:
             # Create if doesn't exist
             try:
-                daily_pokemon: DailyPokemon = GuesserService.create_random_pokemon(
+                daily_pokemon = GuesserService.create_random_pokemon(
                     target_date=target_date
                 )
             except Exception:
                 AuditService.log_error(
                     app_name="guesser",
                     event_type="GET_TODAYS_POKEMON",
-                    message=f"Failed to create a pokemon for today's date - {target_date}",
+                    message=(
+                        f"Failed to create a pokemon for today's date - {target_date}"
+                    ),
                 )
                 return None
 
@@ -222,7 +225,7 @@ class GuesserService:
             "guessed_pokemon": None,
             "hints": [
                 {"Type1": today["pokemon"].type1, "Type2": today["pokemon"].type2},
-                {"Generation": today["pokemon"].generation},
+                {"Generation": str(today["pokemon"].generation)},
                 {},
             ],
         }

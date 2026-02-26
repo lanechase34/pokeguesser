@@ -8,7 +8,7 @@ class PokemonSerializer(serializers.ModelSerializer[Pokemon]):
     Serialize for the pokemon
     """
 
-    class Meta:  # type: ignore[misc]
+    class Meta:
         model = Pokemon
         fields = ["id", "name", "number", "sprite", "type1", "type2"]
         read_only_fields = fields

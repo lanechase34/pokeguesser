@@ -119,7 +119,7 @@ class AuditServiceBasicTest(TestCase):
             self.assertEqual(log.level, level)
 
     @patch("audit.services.get_request_context")
-    def test_log_with_null_context(self, mock_context: MagicMock):
+    def test_log_with_null_context_stores_defaults(self, mock_context: MagicMock):
         """Test logging when context has null values."""
         mock_context.return_value = {"ip_address": None, "user_agent": None}
 
@@ -133,7 +133,7 @@ class AuditServiceBasicTest(TestCase):
 
         log = AuditLog.objects.get(event_type="TASK_COMPLETED")
         self.assertIsNone(log.ip_address)
-        self.assertIsNone(log.user_agent)
+        self.assertEqual(log.user_agent, "")
 
     @patch("audit.services.get_request_context")
     def test_multiple_logs_all_created(self, mock_context: MagicMock):

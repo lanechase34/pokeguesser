@@ -31,7 +31,7 @@ class GuessSerializer(serializers.Serializer[Dict[str, Any]]):
 
 
 class QuestionView(APIView):
-    def get(self, request: Request, format: Optional[str] = None):
+    def get(self, request: Request, format: Optional[str] = None) -> Response:
         """
         GET to retrieve today's question
         """
@@ -66,13 +66,13 @@ class GuessView(APIView):
     throttle_scope = "guess_view"
     throttle_rate = 3
 
-    def post(self, request: Request, format: Optional[str] = None):
+    def post(self, request: Request, format: Optional[str] = None) -> Response:
         """
         POST to submit a user's guess for today's pokemon
         Max 3 attempts per day, each failed attempt gives a new hint
         """
 
-        throttle = throttle = cast(DailyRateThrottle, self.get_throttles()[0])
+        throttle = cast(DailyRateThrottle, self.get_throttles()[0])
 
         # Validate input
         serializer = GuessSerializer(data=request.data)

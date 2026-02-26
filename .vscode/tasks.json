@@ -17,7 +17,7 @@
         {
             "label": "Type Check Python Files",
             "type": "shell",
-            "command": "${workspaceFolder}/backend/dev/Scripts/python.exe -m mypy backend",
+            "command": "${workspaceFolder}/backend/dev/Scripts/python.exe -m mypy backend --config-file ${workspaceFolder}/backend/pyproject.toml",
             "options": {
                 "cwd": "${workspaceFolder}",
                 "shell": {

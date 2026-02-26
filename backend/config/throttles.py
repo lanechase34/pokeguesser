@@ -1,6 +1,6 @@
 import hashlib
 from datetime import timedelta
-from typing import Any, Optional
+from typing import Any, Optional, cast
 
 from django.core.cache import cache
 from django.utils import timezone
@@ -108,21 +108,19 @@ class DailyRateThrottle(BaseThrottle):
         cache_key = self.build_cache_key(scope)
         ttl = _seconds_until_midnight()
 
-        count = cache.get(cache_key)
+        count = cast(int, cache.get(cache_key, 0))
 
-        if count is None:
-            # First request of the day
-            cache.set(cache_key, 1, timeout=ttl)
-            self.num_requests = 1
-            return 1
-
-        # Increment the counter
-        try:
-            count = cache.incr(cache_key)
-        except ValueError:
-            # Fallback for cache backends without incr
-            count += 1
+        if count == 0:
+            # Key doesn't exist yet, set it
+            count = 1
             cache.set(cache_key, count, timeout=ttl)
+        else:
+            try:
+                count = cache.incr(cache_key)
+            except ValueError:
+                # Fallback for cache backends without incr
+                count += 1
+                cache.set(cache_key, count, timeout=ttl)
 
         self.num_requests = count
         return count

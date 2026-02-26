@@ -45,7 +45,7 @@ class DailyPokemon(models.Model):
     def __str__(self) -> str:
         return f"{self.date} - {self.pokemon_name}"
 
-    def get_pokemon(self):
+    def get_pokemon(self) -> Pokemon | None:
         """Helper method to fetch Pokemon record from pogotracker_db"""
         try:
             return Pokemon.objects.get(id=self.pokemon)
@@ -55,5 +55,5 @@ class DailyPokemon(models.Model):
     @property
     def pokemon_name(self) -> str | None:
         """Quick access to pokemon name"""
-        poke = self.get_pokemon()
+        poke: Pokemon | None = self.get_pokemon()
         return poke.name if poke else None

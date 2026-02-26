@@ -99,7 +99,8 @@ class TestGetRandomUnusedPokemonId:
     def test_returns_id_of_live_genderless_pokemon(
         self, live_pokemon: list[Pokemon]
     ) -> None:
-        result: int = GuesserService._get_random_unused_pokemon_id()  # type: ignore[attr-defined] - ignore private function declaration
+        # ignore private function declaration
+        result: int = GuesserService._get_random_unused_pokemon_id()
         valid_ids: list[int] = [p.id for p in live_pokemon]
         assert result in valid_ids
 
@@ -114,7 +115,7 @@ class TestGetRandomUnusedPokemonId:
 
         # Only gendered_pokemon remains but it should be excluded
         with pytest.raises(Exception, match="All Pokemon have been selected"):
-            GuesserService._get_random_unused_pokemon_id()  # type: ignore[attr-defined]
+            GuesserService._get_random_unused_pokemon_id()
 
     def test_excludes_not_live_pokemon(
         self, live_pokemon: list[Pokemon], not_live_pokemon: Pokemon
@@ -127,7 +128,7 @@ class TestGetRandomUnusedPokemonId:
 
         # Only not_live_pokemon remains but it should be excluded
         with pytest.raises(Exception, match="All Pokemon have been selected"):
-            GuesserService._get_random_unused_pokemon_id()  # type: ignore[attr-defined]
+            GuesserService._get_random_unused_pokemon_id()
 
     def test_excludes_already_used_pokemon(self, live_pokemon: list[Pokemon]) -> None:
         # Mark first 4 as used
@@ -137,7 +138,7 @@ class TestGetRandomUnusedPokemonId:
             )
 
         # Only live_pokemon[4] should be available
-        result: int = GuesserService._get_random_unused_pokemon_id()  # type: ignore[attr-defined]
+        result: int = GuesserService._get_random_unused_pokemon_id()
         assert result == live_pokemon[4].id
 
     @patch("guesser.services.AuditService.log_error")
@@ -151,7 +152,7 @@ class TestGetRandomUnusedPokemonId:
             )
 
         with pytest.raises(Exception, match="All Pokemon have been selected"):
-            GuesserService._get_random_unused_pokemon_id()  # type: ignore[attr-defined]
+            GuesserService._get_random_unused_pokemon_id()
 
         mock_log_error.assert_called_once()
         assert "_GET_RANDOM_UNUSED_POKEMON_ID" in str(mock_log_error.call_args)
@@ -165,7 +166,7 @@ class TestGetRandomUnusedPokemonId:
         """
         selected_ids: list[int] = []
         for i in range(len(live_pokemon)):
-            pokemon_id: int = GuesserService._get_random_unused_pokemon_id()  # type: ignore[attr-defined]
+            pokemon_id: int = GuesserService._get_random_unused_pokemon_id()
             assert pokemon_id not in selected_ids
             selected_ids.append(pokemon_id)
             # Simulate it being used

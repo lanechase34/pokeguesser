@@ -21,7 +21,7 @@ from django.urls import include, path
 from rest_framework.request import Request
 
 
-def health_check(request: Request):
+def health_check(request: Request) -> JsonResponse:
     """Simple health check endpoint"""
     return JsonResponse({"status": "Ok!"}, status=200)
 

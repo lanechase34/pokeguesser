@@ -32,10 +32,10 @@ def _create_audit_log_in_thread(
             event_type=event_type,
             level=level,
             message=message,
-            detail=detail,
+            detail=detail or "",
             triggered_by=triggered_by,
             ip_address=ip_address,
-            user_agent=user_agent,
+            user_agent=user_agent or "",
         )
 
         # Close connection to avoid leaks

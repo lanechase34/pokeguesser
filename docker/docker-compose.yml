@@ -52,9 +52,9 @@ services:
             context: ../backend
             dockerfile: ../docker/backend_Dockerfile
         container_name: pokeguesser_backend
-        command: sh -c "python manage.py migrate && python manage.py runserver"
         volumes:
             - ../backend:/app
+            - ../docker/backend_entrypoint.sh:/app/backend_entrypoint.sh
         ports:
             - "8085:8085"
         networks:

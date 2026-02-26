@@ -8,8 +8,13 @@ from datetime import date
 
 
 def pytest_configure() -> None:
-    """Disable database routers for tests."""
+    """Disable database routers for tests and uses in-memory cache"""
     settings.DATABASE_ROUTERS = []
+    settings.CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        }
+    }
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -41,9 +46,11 @@ def clear_test_data_between_tests(db: None) -> Generator[None, None, None]:
     """
     yield
     from guesser.models import DailyPokemon, Pokemon
+    from django.core.cache import cache
 
     DailyPokemon.objects.all().delete()
     Pokemon.objects.all().delete()
+    cache.clear()
 
 
 # Fixtures

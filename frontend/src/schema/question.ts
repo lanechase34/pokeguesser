@@ -1,7 +1,8 @@
-import { safeJson } from 'utils/safeJson';
-import { APIError } from 'utils/apiError';
-import { QuestionResponseSchema } from 'types/Question.type';
+import { GuessResponseSchema } from 'types/Guess.type';
 import type { Question } from 'types/Question.type';
+import { QuestionResponseSchema } from 'types/Question.type';
+import { APIError } from 'utils/apiError';
+import { safeJson } from 'utils/safeJson';
 
 export function questionService() {
     return {
@@ -30,6 +31,35 @@ export function questionService() {
 
             const result = parsed.data;
             return result;
+        },
+
+        /**
+         * POST /guess
+         * Submit an answer to the daily question
+         *
+         * @guess (string) the user's guess
+         * @returns parsed and validated guess response
+         */
+        async submitGuess(guess: string): Promise<GuessResponse> {
+            const formBody = new URLSearchParams();
+            formBody.append('guess', guess);
+
+            const response = await fetch('/guess', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: formBody.toString(),
+            });
+
+            const json = await response.json();
+            const parsed = GuessResponseSchema.safeParse(json);
+
+            if (!parsed.success) {
+                throw new Error(`Unexpected response format: ${parsed.error.message}`);
+            }
+
+            return parsed.data;
         },
     };
 }

@@ -6,6 +6,9 @@ from .serializers import PokemonSerializer
 from typing import Any, Dict, Optional, cast
 from config.throttles import DailyRateThrottle
 from rest_framework.request import Request
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class GuessSerializer(serializers.Serializer[Dict[str, Any]]):
@@ -48,6 +51,7 @@ class QuestionView(APIView):
             )
 
         except Exception:
+            logger.exception("Failed to get today's question")
             return Response(
                 {"error": "Failed to get today's question"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -114,6 +118,7 @@ class GuessView(APIView):
             )
 
         except (KeyError, Exception):
+            logger.exception("Failed to check user's guess")
             return Response(
                 {"error": "An error occurred processing your guess"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,

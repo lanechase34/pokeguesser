@@ -1,8 +1,9 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './App.css';
-import QuestionPage from 'pages/Question';
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import NotFound from 'pages/NotFound';
+import QuestionPage from 'pages/Question';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 const STALE_TIME = 15 * 60 * 1000; // 15 minutes
 const queryClient = new QueryClient({

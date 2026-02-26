@@ -4,6 +4,8 @@ from django.db import transaction
 from .models import Pokemon, DailyPokemon
 from audit.services import AuditService
 from typing import TypedDict, Dict
+from django.core.cache import cache
+from datetime import datetime, timedelta
 
 
 class TodaysPokemonResult(TypedDict):
@@ -127,6 +129,13 @@ class GuesserService:
         if target_date is None:
             target_date = date.today()
 
+        cache_key = f"todays_pokemon_{target_date.isoformat()}"
+
+        # If available, return cached result
+        cached = cache.get(cache_key)
+        if cached is not None:
+            return cached
+
         # Select DailyPokemon based on today's date
         try:
             daily_pokemon: DailyPokemon = DailyPokemon.objects.get(date=target_date)
@@ -137,6 +146,11 @@ class GuesserService:
                     target_date=target_date
                 )
             except Exception:
+                AuditService.log_error(
+                    app_name="guesser",
+                    event_type="GET_TODAYS_POKEMON",
+                    message=f"Failed to create a pokemon for today's date - {target_date}",
+                )
                 return None
 
         # Fetch the Pokemon data from POGO Tracker
@@ -150,7 +164,18 @@ class GuesserService:
             )
             return None
 
-        return {"daily_pokemon": daily_pokemon, "pokemon": pokemon}
+        result: TodaysPokemonResult = {
+            "daily_pokemon": daily_pokemon,
+            "pokemon": pokemon,
+        }
+
+        # Cache until midnight
+        now = datetime.now()
+        seconds_until_midnight = (
+            datetime.combine(now.date() + timedelta(days=1), datetime.min.time()) - now
+        ).seconds
+        cache.set(cache_key, result, timeout=seconds_until_midnight)
+        return result
 
     @staticmethod
     def check_guess(

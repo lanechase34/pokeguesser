@@ -5,6 +5,7 @@ import { defineConfig } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 import importPlugin from 'eslint-plugin-import';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
 
 export default defineConfig([
     {
@@ -39,6 +40,9 @@ export default defineConfig([
     // Project-specific configurations
     {
         files: ['**/*.ts', '**/*.tsx'],
+        plugins: {
+            'simple-import-sort': simpleImportSort,
+        },
         languageOptions: {
             parser: tseslint.parser,
             parserOptions: {
@@ -60,6 +64,11 @@ export default defineConfig([
             },
         },
         rules: {
+            'simple-import-sort/imports': 'error',
+            'simple-import-sort/exports': 'error',
+            'import/first': 'error',
+            'import/newline-after-import': 'error',
+            'import/no-duplicates': 'error',
             '@typescript-eslint/no-unused-vars': [
                 'error',
                 {

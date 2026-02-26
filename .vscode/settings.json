@@ -17,10 +17,16 @@
         "editor.defaultFormatter": "redhat.vscode-yaml"
     },
     "[typescriptreact]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": "explicit"
+        }
     },
     "[typescript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": "explicit"
+        }
     },
     "[nginx]": {
         "editor.defaultFormatter": "raynigon.nginx-formatter"
@@ -65,9 +71,11 @@
     "eslint.options": {
         "overrideConfigFile": "./eslint.config.ts"
     },
+    "eslint.validate": ["typescript", "typescriptreact"],
     "jest.runMode": {
         "type": "on-save",
         "testFileOnly": true
     },
-    "python.useEnvironmentsExtension": true
+    "python.useEnvironmentsExtension": true,
+    "files.eol": "\n"
 }

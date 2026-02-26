@@ -94,3 +94,11 @@ Init cache table?
     image magick make black silhoutte of image
 
     `magick input.png -channel RGB -evaluate set 0 +channel output.png`
+
+### Testing
+
+Copy the docker/.env.testing.example to /backend/.env.test
+
+This will allow tests to run locally and connect to docker containers
+
+Test database will automatically be created as 'test_pokeguesser'

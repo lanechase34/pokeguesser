@@ -12,7 +12,7 @@
         "noUncheckedSideEffectImports": true,
         "noUnusedParameters": true,
         "module": "esnext",
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": true,
@@ -21,7 +21,7 @@
         "paths": {
             "@test-utils": ["./test-utils.tsx"]
         },
-        "types": ["vite/client", "node", "jest"]
+        "types": ["vite/client", "node", "jest", "@testing-library/jest-dom"]
     },
     "include": ["src/**/*", "eslint.config.ts"]
 }

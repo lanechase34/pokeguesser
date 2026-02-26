@@ -231,6 +231,31 @@ class TestGetTodaysPokemon:
         assert result is not None
         assert result["daily_pokemon"].date == date.today()
 
+    def test_returns_cached_result_if_available(
+        self, today_pokemon: DailyPokemon, live_pokemon: list[Pokemon]
+    ) -> None:
+        """Second call should return cached result without hitting the database"""
+
+        # Prime the cache with a first call
+        first_result: TodaysPokemonResult | None = GuesserService.get_todays_pokemon()
+        assert first_result is not None
+
+        # If cache is working, these should never be called
+        with (
+            patch("guesser.services.DailyPokemon.objects.get") as mock_daily_get,
+            patch("guesser.services.Pokemon.objects.get") as mock_pokemon_get,
+        ):
+            second_result: TodaysPokemonResult | None = (
+                GuesserService.get_todays_pokemon()
+            )
+
+            mock_daily_get.assert_not_called()
+            mock_pokemon_get.assert_not_called()
+
+        assert second_result is not None
+        assert second_result["daily_pokemon"].pk == today_pokemon.pk
+        assert second_result["pokemon"].id == live_pokemon[0].id
+
 
 # check_guess()
 @pytest.mark.django_db

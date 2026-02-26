@@ -1,10 +1,13 @@
 from __future__ import annotations
+
+from datetime import date
 from typing import Any, Generator
+
 import pytest
 from django.conf import settings
-from django.db import connections, connection
-from guesser.models import Pokemon, DailyPokemon
-from datetime import date
+from django.db import connection, connections
+
+from guesser.models import DailyPokemon, Pokemon
 
 
 def pytest_configure() -> None:
@@ -42,7 +45,8 @@ def create_pokemon_table(
 def clear_test_data_between_tests(db: None) -> Generator[None, None, None]:
     """
     Clear Pokemon and DailyPokemon records between tests
-    This is needed when we are testing REAL commits using @pytest.mark.django_db(transaction=True)
+    This is needed when we are testing REAL commits using
+    @pytest.mark.django_db(transaction=True)
     """
     yield
     from guesser.models import DailyPokemon, Pokemon

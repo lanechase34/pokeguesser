@@ -22,12 +22,12 @@ class AuditLog(models.Model):
         max_length=20, choices=Level.choices, default="INFO", db_index=True
     )
     message = models.TextField()
-    detail = models.TextField(null=True, blank=True)
+    detail = models.TextField(null=False, blank=True)
     triggered_by = models.CharField(
-        max_length=100, null=True, blank=True
+        max_length=100, null=False, blank=True
     )  # ex: 'cron', 'api', 'manual'
     ip_address = models.GenericIPAddressField(null=True, blank=True)
-    user_agent = models.CharField(max_length=500, null=True, blank=True)
+    user_agent = models.CharField(max_length=500, null=False, blank=True)
 
     class Meta:
         db_table = "audit_log"

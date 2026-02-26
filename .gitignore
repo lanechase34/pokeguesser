@@ -4,6 +4,7 @@ backend/dev/**
 **/.pytest_cache/
 .ruff_cache
 .ruff_cache/**
+.mypy_cache
 
 .env
 env/

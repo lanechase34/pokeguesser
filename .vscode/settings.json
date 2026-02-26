@@ -31,9 +31,6 @@
     "[nginx]": {
         "editor.defaultFormatter": "raynigon.nginx-formatter"
     },
-    "[python]": {
-        "editor.defaultFormatter": "charliermarsh.ruff"
-    },
     "files.exclude": {
         "**/__pycache__/": true,
         "**/.git": true,
@@ -41,22 +38,15 @@
         "**/.ruff_cache": true,
         "**/.pytest_cache/": true,
         "**/__init__.py": true,
-        "frontend/node_modules/": true
+        "frontend/node_modules/": true,
+        "**/.mypy_cache/": true
     },
-    "prettier.tabWidth": 4,
-    "prettier.singleQuote": true,
-    "prettier.printWidth": 120,
     "workbench.tree.enableStickyScroll": false,
     "editor.stickyScroll.enabled": false,
     "terminal.integrated.stickyScroll.enabled": false,
-    "prettier.trailingComma": "es5",
     "github.copilot.enable": {
         "*": false
     },
-    "python.defaultInterpreterPath": "${workspaceFolder}/backend/dev/Scripts/python.exe",
-    "python.terminal.activateEnvironment": true,
-    "python.envFile": "${workspaceFolder}/backend/.env",
-    "ruff.enable": true,
     "terminal.integrated.profiles.windows": {
         "PowerShell": {
             "path": "pwsh.exe",
@@ -64,10 +54,7 @@
         }
     },
     "terminal.integrated.defaultProfile.windows": "PowerShell",
-    "python.testing.pytestEnabled": true,
-    "python.testing.cwd": "${workspaceFolder}/backend",
-    "python.testing.pytestArgs": ["-s"],
-    "python.testing.unittestEnabled": false,
+    // Typescript settings
     "eslint.options": {
         "overrideConfigFile": "./eslint.config.ts"
     },
@@ -76,6 +63,31 @@
         "type": "on-save",
         "testFileOnly": true
     },
+    "files.eol": "\n",
+    "prettier.trailingComma": "es5",
+    "prettier.tabWidth": 4,
+    "prettier.singleQuote": true,
+    "prettier.printWidth": 120,
+    // Python settings
+    "python.defaultInterpreterPath": "${workspaceFolder}/backend/dev/Scripts/python.exe",
+    "python.terminal.activateEnvironment": true,
+    "python.envFile": "${workspaceFolder}/backend/.env.local",
     "python.useEnvironmentsExtension": true,
-    "files.eol": "\n"
+    // Formatting + Linting
+    "ruff.enable": true,
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.codeActionsOnSave": {
+            "source.organizeImports.ruff": "explicit",
+            "source.fixAll.ruff": "explicit"
+        }
+    },
+    "ruff.organizeImports": true,
+    // Testing
+    "python.testing.cwd": "${workspaceFolder}/backend",
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestArgs": ["."],
+    "python.testing.autoTestDiscoverOnSaveEnabled": true,
+    "python-envs.pythonProjects": []
 }

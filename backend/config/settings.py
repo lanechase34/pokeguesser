@@ -10,10 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
-from pathlib import Path
-from dotenv import load_dotenv
 import os
 import sys
+from pathlib import Path
+
+from dotenv import load_dotenv
 
 # Determine which .env file to load
 ENV = os.getenv("DJANGO_ENV", "local")  # Default to 'local'

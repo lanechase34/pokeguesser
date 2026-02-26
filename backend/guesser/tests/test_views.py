@@ -1,13 +1,15 @@
-import pytest
-from unittest.mock import patch, MagicMock
-from django.test import TestCase, override_settings
-from django.core.cache import cache
-from rest_framework.test import APITestCase, APIClient
-from rest_framework import status
-from datetime import datetime
 import time
+from datetime import datetime
+from unittest.mock import MagicMock, patch
+
+import pytest
+from django.core.cache import cache
+from django.test import TestCase, override_settings
+from rest_framework import status
+from rest_framework.test import APIClient, APITestCase
+
+from guesser.models import DailyPokemon, Pokemon
 from guesser.views import GuessSerializer
-from guesser.models import Pokemon, DailyPokemon
 
 
 class GuessSerializerTest(TestCase):

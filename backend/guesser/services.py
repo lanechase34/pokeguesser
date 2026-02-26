@@ -1,11 +1,14 @@
 from __future__ import annotations
-from datetime import date
-from django.db import transaction
-from .models import Pokemon, DailyPokemon
-from audit.services import AuditService
-from typing import TypedDict, Dict
+
+from datetime import date, datetime, timedelta
+from typing import Dict, TypedDict
+
 from django.core.cache import cache
-from datetime import datetime, timedelta
+from django.db import transaction
+
+from audit.services import AuditService
+
+from .models import DailyPokemon, Pokemon
 
 
 class TodaysPokemonResult(TypedDict):
@@ -37,7 +40,8 @@ class GuesserService:
             DailyPokemon instance
         """
 
-        # So this is weird, but this is because date.today() would only be evaluated once if it were in the function args
+        # So this is weird, but this is because date.today() would only be
+        # evaluated once if it were in the function args
         if target_date is None:
             target_date = date.today()
 
@@ -53,7 +57,10 @@ class GuesserService:
                 AuditService.log(
                     app_name="guesser",
                     event_type="CREATE_RANDOM_POKEMON",
-                    message=f"Created new pokemon {daily_pokemon.pokemon_name} for {target_date}",
+                    message=(
+                        f"Created new pokemon {daily_pokemon.pokemon_name} "
+                        f"for {target_date}"
+                    ),
                     triggered_by=triggered_by,
                 )
             return daily_pokemon
@@ -117,13 +124,15 @@ class GuesserService:
     ) -> TodaysPokemonResult | None:
         """
         Get today's Pokemon with all data
-        Lazy loads - if no pokemon exists (nightly job failed), create one, then return it
+        Lazy loads - if no pokemon exists (nightly job failed),
+            create one, then return it
 
         Args:
             target_date: Date to select pokemon for (defaults to today)
 
         Returns:
-            TodaysPokemonResult with 'daily_pokemon' and 'pokemon' keys, or None on failure
+            TodaysPokemonResult with 'daily_pokemon' and 'pokemon' keys,
+                or None on failure
         """
 
         if target_date is None:
@@ -160,7 +169,10 @@ class GuesserService:
             AuditService.log_error(
                 app_name="guesser",
                 event_type="GET_TODAYS_POKEMON",
-                message=f"DailyPokemon references non-existent Pokemon ID {daily_pokemon.pokemon}",
+                message=(
+                    f"DailyPokemon references non-existent"
+                    f"Pokemon ID {daily_pokemon.pokemon}"
+                ),
             )
             return None
 

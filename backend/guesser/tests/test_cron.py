@@ -1,8 +1,11 @@
 from __future__ import annotations
+
 from datetime import date, timedelta
-from unittest.mock import MagicMock, patch
 from decimal import Decimal
+from unittest.mock import MagicMock, patch
+
 import pytest
+
 from guesser.cron import SelectDailyPokemonCron
 from guesser.models import DailyPokemon, Pokemon
 

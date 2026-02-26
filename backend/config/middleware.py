@@ -1,6 +1,7 @@
 import threading
-from django.http import HttpRequest, HttpResponse
 from typing import Callable
+
+from django.http import HttpRequest, HttpResponse
 
 # Thread-local storage, each request thread gets its own isolated copy
 _request_context = threading.local()
@@ -36,7 +37,8 @@ class RequestContextMiddleware:
             response = self.get_response(request)
         finally:
             # Clean up AFTER the request is done
-            # Important: prevents context from leaking to the next request on this thread
+            # Important: prevents context from leaking to the next request on
+            # this thread
             _request_context.ip_address = None
             _request_context.user_agent = None
 

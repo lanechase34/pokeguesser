@@ -1,7 +1,8 @@
 import time
-from unittest.mock import patch, MagicMock
-from django.test import TestCase, TransactionTestCase
 from concurrent.futures import ThreadPoolExecutor
+from unittest.mock import MagicMock, patch
+
+from django.test import TestCase, TransactionTestCase
 
 from audit.models import AuditLog
 from audit.services import AuditService

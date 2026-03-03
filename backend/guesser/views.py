@@ -1,7 +1,8 @@
 import logging
-from typing import Any, Dict, Optional, cast
+from typing import Any, Dict, Never, Optional, cast
 
 from rest_framework import serializers, status
+from rest_framework.exceptions import APIException
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -28,6 +29,17 @@ class GuessSerializer(serializers.Serializer[Dict[str, Any]]):
         if not value:
             raise serializers.ValidationError("Guess not provided")
         return value
+
+
+class ThrottledWithAnswer(APIException):
+    status_code = status.HTTP_429_TOO_MANY_REQUESTS
+
+    def __init__(self, answer: Any) -> None:
+        self.detail: dict[str, Any] = {
+            "correct": False,
+            "answer": answer,
+            "attempt": 3,
+        }
 
 
 class QuestionView(APIView):
@@ -66,6 +78,14 @@ class GuessView(APIView):
     throttle_scope = "guess_view"
     throttle_rate = 3
 
+    def throttled(self, request: Request, wait: float) -> Never:
+        """Override to return the answer alongside the 429"""
+        result = GuesserService.get_todays_pokemon()
+        if result is None:
+            raise ThrottledWithAnswer(None)
+        answer = PokemonSerializer(result["pokemon"]).data
+        raise ThrottledWithAnswer(answer)
+
     def post(self, request: Request, format: Optional[str] = None) -> Response:
         """
         POST to submit a user's guess for today's pokemon
@@ -92,10 +112,12 @@ class GuessView(APIView):
             if result is None:
                 raise KeyError("Today''s guess not found")
 
-            answer = PokemonSerializer(result["guessed_pokemon"]).data
-
             # If correct or out of attempts
             if result["correct"] or attempt == 3:
+                todays_pokemon = GuesserService.get_todays_pokemon()
+                if todays_pokemon is None:
+                    raise KeyError("Today's pokemon not found")
+                answer = PokemonSerializer(todays_pokemon["pokemon"]).data
                 return Response(
                     {
                         "correct": result["correct"],

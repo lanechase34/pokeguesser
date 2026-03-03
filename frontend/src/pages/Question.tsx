@@ -1,8 +1,12 @@
+import AnswerCard from 'components/AnswerCard';
+import HintsList from 'components/HintsList';
+import Toast from 'components/Toast';
+import useCountdown from 'hooks/useCountdown';
+import useQuestion from 'hooks/useQuestion';
 import { useEffect, useMemo, useState } from 'react';
-import { questionService } from 'schema/question';
 import { z } from 'zod';
 
-const guessForm = z.object({
+const guessSchema = z.object({
     guess: z
         .string()
         .min(3, 'Please enter a Pokémon name.')
@@ -11,66 +15,37 @@ const guessForm = z.object({
 });
 
 export default function Question() {
-    const [loading, setLoading] = useState<boolean>(true);
+    const { loading, imgId, hints, submitting, submitError, todayResult, submitGuess, setSubmitError } = useQuestion();
+
     const [guess, setGuess] = useState<string>('');
-    const [submitError, setSubmitError] = useState<string | null>(null);
     const [validationError, setValidationError] = useState<string | null>(null);
-    const [submitting, setSubmitting] = useState<boolean>(false);
-    const [imgId, setImgId] = useState<string>('');
 
-    const questionAPI = useMemo(() => questionService(), []);
+    // Countdown til next question
+    const midnight = useMemo(() => {
+        const d = new Date();
+        d.setHours(24, 0, 0, 0);
+        return d;
+    }, []);
 
-    const todayDate = new Date().toLocaleDateString('en-US', {
+    const countdown = useCountdown(midnight);
+
+    const todaysDate = new Date().toLocaleDateString('en-US', {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
         day: 'numeric',
     });
 
-    // Load today's question on mount
-    useEffect(() => {
-        let cancelled = false;
-
-        async function loadQuestion() {
-            try {
-                setLoading(true);
-                const question = await questionAPI.fetchTodaysQuestion();
-                if (!cancelled) {
-                    setImgId(`${question.id}`);
-                    setLoading(false);
-                }
-            } catch (err: unknown) {
-                console.error('Error retrieving todays question', err);
-            }
-        }
-
-        void loadQuestion();
-
-        return () => {
-            cancelled = true;
-        };
-    }, [questionAPI]);
-
-    async function submitGuess() {
-        setValidationError(null);
-        setSubmitError(null);
-
-        // Validate the user's guess
-        const result = guessForm.safeParse({ guess });
+    async function handleSubmitGuess() {
+        const result = guessSchema.safeParse({ guess });
         if (!result.success) {
-            const firstError = result.error.issues[0].message ?? 'Invalid Input.';
-            setValidationError(firstError);
+            const error = result.error.issues[0].message ?? 'Invalid input.';
+            setValidationError(error);
             return;
         }
 
-        setSubmitting(true);
-        try {
-            const response = await questionAPI.submitGuess(guess);
-        } catch (err: unknown) {
-            console.error('Error submitting guess', err);
-            setSubmitError('Something went wrong submitting your guess. Please try again.');
-            setSubmitting(false);
-        }
+        await submitGuess(guess);
+        setGuess('');
     }
 
     // Auto-dismiss toasts
@@ -93,66 +68,70 @@ export default function Question() {
             <div className="game-card">
                 <div className="header">
                     <h1 className="title">Who's That Pokémon?</h1>
-                    <p className="date">{todayDate}</p>
+                    <p className="date">{todaysDate}</p>
                 </div>
 
                 <div className="silhouette-container">
                     <div className="silhouette-glow">
                         <img
-                            src={`/pokeguesser/silhouettes/${imgId}.webp`}
-                            alt="Silhouette to guess"
-                            className="silhouette"
+                            src={
+                                todayResult
+                                    ? `/pokeguesser/images/${todayResult.answer.number}.webp`
+                                    : `/pokeguesser/silhouettes/${imgId}.webp`
+                            }
+                            alt={todayResult ? "Today's answer" : 'Silhouette to guess'}
+                            className={todayResult ? 'answer' : 'silhouette'}
                         />
                     </div>
                 </div>
 
-                <form
-                    onSubmit={(e) => {
-                        e.preventDefault();
-                        void submitGuess();
-                    }}
-                    className="guess-form"
-                >
-                    <input
-                        type="text"
-                        value={guess}
-                        onChange={(e) => {
-                            setGuess(e.target.value);
-                            setValidationError(null);
+                <HintsList hints={hints} />
+
+                {todayResult?.answer.id ? (
+                    <AnswerCard result={todayResult} countdown={countdown} />
+                ) : (
+                    <form
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            void handleSubmitGuess();
                         }}
-                        placeholder="Enter Pokémon name..."
-                        className={`guess-input ${validationError ? 'guess-input-error' : ''}`}
-                        disabled={submitting}
-                    />
-                    <button type="submit" disabled={submitting || !guess.trim()} className="submit-button">
-                        {submitting ? 'Checking...' : 'Guess!'}
-                    </button>
-                </form>
+                        className="guess-form"
+                    >
+                        <input
+                            type="text"
+                            value={guess}
+                            onChange={(e) => {
+                                setGuess(e.target.value);
+                                setValidationError(null);
+                            }}
+                            placeholder="Enter Pokémon name..."
+                            className={`guess-input ${validationError ? 'guess-input-error' : ''}`}
+                            disabled={submitting}
+                        />
+                        <button type="submit" disabled={submitting || !guess.trim()} className="submit-button">
+                            {submitting ? 'Checking...' : 'Guess!'}
+                        </button>
+                    </form>
+                )}
             </div>
 
             {/* Toasts */}
             <div className="toast-container">
                 {validationError && (
-                    <div className="toast toast-warning">
-                        <div className="toast-message">
-                            <span className="toast-title">Invalid Guess</span>
-                            <span className="toast-body">{validationError}</span>
-                        </div>
-                        <button className="toast-dismiss" onClick={() => setValidationError(null)}>
-                            X
-                        </button>
-                    </div>
+                    <Toast
+                        type="warning"
+                        title="Invalid Guess"
+                        body={validationError}
+                        onDismiss={() => setValidationError(null)}
+                    />
                 )}
                 {submitError && (
-                    <div className="toast toast-error">
-                        <div className="toast-message">
-                            <span className="toast-title">Submission Failed</span>
-                            <span className="toast-body">{submitError}</span>
-                        </div>
-                        <button className="toast-dismiss" onClick={() => setSubmitError(null)}>
-                            X
-                        </button>
-                    </div>
+                    <Toast
+                        type="error"
+                        title="Submission Failed"
+                        body={submitError}
+                        onDismiss={() => setSubmitError(null)}
+                    />
                 )}
             </div>
         </div>

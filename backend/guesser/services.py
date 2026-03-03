@@ -19,7 +19,7 @@ class TodaysPokemonResult(TypedDict):
 class GuessResult(TypedDict):
     correct: bool
     guessed_pokemon: Pokemon | None
-    hints: list[Dict[str, str]]
+    hints: list[Dict[str, str | int]]
 
 
 class GuesserService:
@@ -225,7 +225,7 @@ class GuesserService:
             "guessed_pokemon": None,
             "hints": [
                 {"Type1": today["pokemon"].type1, "Type2": today["pokemon"].type2},
-                {"Generation": str(today["pokemon"].generation)},
+                {"Generation": int(today["pokemon"].generation)},
                 {},
             ],
         }

@@ -1,0 +1,28 @@
+pre-commit:
+  jobs:
+    - name: backend
+      group:
+        piped: true
+        jobs:
+          - name: format
+            glob: "*.py"
+            run: backend/dev/Scripts/python.exe -m ruff format .
+
+          - name: lint
+            glob: "*.py"
+            run: backend/dev/Scripts/python.exe -m ruff check . --fix
+
+    - name: frontend
+      group:
+        piped: true
+        jobs:
+          - name: format
+            root: "frontend/"
+            run: npm run-script format
+          - name: lint
+            root: "frontend/"
+            run: npm run lint:fix
+
+    - name: mypy
+      glob: "*.py"
+      run: backend/dev/Scripts/python.exe -m mypy backend --config-file backend/pyproject.toml

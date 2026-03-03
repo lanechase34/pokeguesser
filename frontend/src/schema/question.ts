@@ -1,3 +1,4 @@
+import type { GuessResponse } from 'types/Guess.type';
 import { GuessResponseSchema } from 'types/Guess.type';
 import type { Question } from 'types/Question.type';
 import { QuestionResponseSchema } from 'types/Question.type';
@@ -44,7 +45,7 @@ export function questionService() {
             const formBody = new URLSearchParams();
             formBody.append('guess', guess);
 
-            const response = await fetch('/guess', {
+            const response = await fetch('/pokeguesser/api/v1/guess', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -52,7 +53,8 @@ export function questionService() {
                 body: formBody.toString(),
             });
 
-            const json = await response.json();
+            // Validate the response
+            const json = await safeJson(response);
             const parsed = GuessResponseSchema.safeParse(json);
 
             if (!parsed.success) {

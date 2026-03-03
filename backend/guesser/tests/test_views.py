@@ -186,13 +186,21 @@ class GuessViewTest(APITestCase):
         """Clean up after tests."""
         cache.clear()
 
+    @patch("guesser.views.GuesserService.get_todays_pokemon")
     @patch("guesser.views.GuesserService.check_guess")
-    def test_correct_guess_first_attempt(self, mock_check_guess: MagicMock):
+    def test_correct_guess_first_attempt(
+        self, mock_check_guess: MagicMock, mock_get_todays_pokemon: MagicMock
+    ):
         """Test correct guess on first attempt."""
         mock_check_guess.return_value = {
             "correct": True,
             "guessed_pokemon": self.correct_pokemon,
             "hints": [],
+        }
+
+        mock_get_todays_pokemon.return_value = {
+            "pokemon": self.correct_pokemon,
+            "daily_pokemon": "",
         }
 
         response = self.client.post(self.url, {"guess": "pikachu"})

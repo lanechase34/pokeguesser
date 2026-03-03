@@ -1,7 +1,5 @@
 import { z } from 'zod';
 
-import { ThrottledResponseSchema } from './Throttled.type';
-
 /**
  * Hints are given on incorrect guesses
  */
@@ -11,10 +9,32 @@ const Hint1Schema = z.object({
 });
 
 const Hint2Schema = z.object({
-    Generation: z.string(),
+    Generation: z.number(),
 });
 
 const HintSchema = z.union([Hint1Schema, Hint2Schema]);
+
+/**
+ * Correct answer pokemon details
+ */
+const AnswerSchema = z.object({
+    id: z.number(),
+    name: z.string(),
+    number: z.number(),
+    sprite: z.string(),
+    type1: z.string(),
+    type2: z.string(),
+});
+
+/**
+ * Correct t/f with answer
+ * Happens when guess is correct, or user out of attempts
+ */
+const GameOverResponseSchema = z.object({
+    correct: z.boolean(),
+    answer: AnswerSchema,
+    attempt: z.number(),
+});
 
 const IncorrectResponseSchema = z.object({
     correct: z.literal(false),
@@ -23,22 +43,6 @@ const IncorrectResponseSchema = z.object({
     hint: HintSchema,
 });
 
-/**
- * Correct response will contain the pokemon's true information
- */
-const CorrectResponseSchema = z.object({
-    correct: z.literal(true),
-    answer: z.object({
-        id: z.number(),
-        name: z.string(),
-        number: z.number(),
-        sprite: z.string(),
-        type1: z.string(),
-        type2: z.string(),
-    }),
-    attempt: z.number(),
-});
-
-export const GuessResponseSchema = z.union([CorrectResponseSchema, IncorrectResponseSchema, ThrottledResponseSchema]);
-
+export const GuessResponseSchema = z.union([GameOverResponseSchema, IncorrectResponseSchema]);
 export type GuessResponse = z.infer<typeof GuessResponseSchema>;
+export type GameOverResponse = z.infer<typeof GameOverResponseSchema>;

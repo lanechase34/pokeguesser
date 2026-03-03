@@ -52,9 +52,10 @@ services:
             context: ../backend
             dockerfile: ../docker/backend_Dockerfile
         container_name: pokeguesser_backend
+        command: /entrypoint.sh
         volumes:
-            - ../backend:/app
-            - ../docker/backend_entrypoint.sh:/app/backend_entrypoint.sh
+            - ../backend:/app # mount backend/ to /app
+            - ../docker/backend_entrypoint.sh:/entrypoint.sh:ro # maps entrypoint script outside app/ dir
         ports:
             - "8085:8085"
         networks:

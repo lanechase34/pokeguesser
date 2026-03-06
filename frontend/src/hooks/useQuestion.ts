@@ -1,6 +1,6 @@
 import useLocalStorage from 'hooks/useLocalStorage';
 import { useEffect, useMemo, useState } from 'react';
-import { questionService } from 'schema/question';
+import { questionService } from 'services/question';
 import type { GameOverResponse } from 'types/Guess.type';
 import { formatHint } from 'utils/formatHint';
 
@@ -44,7 +44,7 @@ interface UseQuestionReturn {
  * A correct guess or running out of attempts triggers game over, persisting
  * the result to localStorage so the user cannot re-attempt on refresh.
  *
- * @returns {UseQuestionReturn} Game state and actions
+ * @returns Game state and actions
  */
 export default function useQuestion(): UseQuestionReturn {
     const [loading, setLoading] = useState(true);

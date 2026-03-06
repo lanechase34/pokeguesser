@@ -1,6 +1,14 @@
 import { useEffect, useState } from 'react';
 
-export default function useCountdown(expiresAt: Date): string {
+/**
+ * Counts down to a given expiry date, updating every second.
+ * Returns the remaining time as a `HH:MM:SS` string.
+ * Returns `"00:00:00"` once the expiry date has passed.
+ *
+ * @param expiresAt - The date and time to count down to.
+ * @returns The remaining time formatted as `HH:MM:SS`.
+ */
+export default function useCountdown(expiresAt: Date) {
     const [timeLeft, setTimeLeft] = useState<string>('');
 
     useEffect(() => {

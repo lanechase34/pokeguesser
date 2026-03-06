@@ -546,3 +546,36 @@ button:focus-visible {
     font-variant-numeric: tabular-nums;
     letter-spacing: 1px;
 }
+
+/* 404 Not Found */
+.nf-card {
+    max-width: 480px;
+}
+
+.nf-404 {
+    font-size: 6rem;
+    font-weight: 800;
+    line-height: 1;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+}
+
+.nf-title {
+    margin-bottom: 1rem;
+}
+
+.nf-subtitle {
+    color: #666;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.7;
+    margin: 0 0 2rem 0;
+}
+
+.nf-btn {
+    max-width: 240px;
+    margin: 0 auto;
+}

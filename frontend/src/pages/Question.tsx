@@ -2,58 +2,42 @@ import AnswerCard from 'components/AnswerCard';
 import HintsList from 'components/HintsList';
 import Toast from 'components/Toast';
 import useCountdown from 'hooks/useCountdown';
+import useGuessForm from 'hooks/useGuessForm';
 import useQuestion from 'hooks/useQuestion';
-import { useEffect, useMemo, useState } from 'react';
-import { z } from 'zod';
-
-const guessSchema = z.object({
-    guess: z
-        .string()
-        .min(3, 'Please enter a Pokémon name.')
-        .max(50, 'That name is too long.')
-        .regex(/^[a-zA-Z0-9\s\-.]+$/, 'Only letters, numbers, hyphens, and spaces are allowed.'),
-});
+import useToast from 'hooks/useToast';
+import { useEffect, useMemo } from 'react';
 
 export default function Question() {
     const { loading, imgId, hints, submitting, submitError, todayResult, submitGuess, setSubmitError } = useQuestion();
 
-    const [guess, setGuess] = useState<string>('');
-    const [validationError, setValidationError] = useState<string | null>(null);
+    // Submissions Errors
+    const { message: submitErrorMessage, show: showSubmitError, dismiss: dismissSubmitError } = useToast();
+    // Update the submitErrorToast as the submit error changes
+    useEffect(() => {
+        if (!submitError) return;
+        showSubmitError(submitError);
+        setSubmitError(null);
+    }, [submitError, showSubmitError, setSubmitError]);
 
-    // Countdown til next question
-    const midnight = useMemo(() => {
+    // Guess Form
+    const { guess, hasValidationError, validationToast, handleSubmit, handleChange } = useGuessForm(submitGuess);
+
+    // Countdown til next question and todaysDate
+    const { midnight, todaysDate } = useMemo(() => {
         const d = new Date();
         d.setHours(24, 0, 0, 0);
-        return d;
+        return {
+            midnight: d,
+            todaysDate: new Date().toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+            }),
+        };
     }, []);
 
     const countdown = useCountdown(midnight);
-
-    const todaysDate = new Date().toLocaleDateString('en-US', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-    });
-
-    async function handleSubmitGuess() {
-        const result = guessSchema.safeParse({ guess });
-        if (!result.success) {
-            const error = result.error.issues[0].message ?? 'Invalid input.';
-            setValidationError(error);
-            return;
-        }
-
-        await submitGuess(guess);
-        setGuess('');
-    }
-
-    // Auto-dismiss toasts
-    useEffect(() => {
-        if (!validationError) return;
-        const timer = setTimeout(() => setValidationError(null), 4000);
-        return () => clearTimeout(timer);
-    }, [validationError]);
 
     if (loading) {
         return (
@@ -93,7 +77,7 @@ export default function Question() {
                     <form
                         onSubmit={(e) => {
                             e.preventDefault();
-                            void handleSubmitGuess();
+                            void handleSubmit();
                         }}
                         className="guess-form"
                     >
@@ -101,11 +85,10 @@ export default function Question() {
                             type="text"
                             value={guess}
                             onChange={(e) => {
-                                setGuess(e.target.value);
-                                setValidationError(null);
+                                handleChange(e.target.value);
                             }}
                             placeholder="Enter Pokémon name..."
-                            className={`guess-input ${validationError ? 'guess-input-error' : ''}`}
+                            className={`guess-input ${hasValidationError ? 'guess-input-error' : ''}`}
                             disabled={submitting}
                         />
                         <button type="submit" disabled={submitting || !guess.trim()} className="submit-button">
@@ -117,20 +100,20 @@ export default function Question() {
 
             {/* Toasts */}
             <div className="toast-container">
-                {validationError && (
+                {validationToast.message && (
                     <Toast
                         type="warning"
                         title="Invalid Guess"
-                        body={validationError}
-                        onDismiss={() => setValidationError(null)}
+                        body={validationToast.message}
+                        onDismiss={validationToast.dismiss}
                     />
                 )}
-                {submitError && (
+                {submitErrorMessage && (
                     <Toast
                         type="error"
                         title="Submission Failed"
-                        body={submitError}
-                        onDismiss={() => setSubmitError(null)}
+                        body={submitErrorMessage}
+                        onDismiss={dismissSubmitError}
                     />
                 )}
             </div>

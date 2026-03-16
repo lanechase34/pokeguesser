@@ -7,7 +7,7 @@ import useQuestion from '../useQuestion';
 const mockFetchTodaysQuestion = jest.fn();
 const mockSubmitGuess = jest.fn();
 
-jest.mock('schema/question', () => ({
+jest.mock('services/question', () => ({
     questionService: () => ({
         fetchTodaysQuestion: mockFetchTodaysQuestion,
         submitGuess: mockSubmitGuess,

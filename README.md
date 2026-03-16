@@ -66,10 +66,10 @@
 
 7. Configure Environment
 
-    Copy `docker/env.docker.example` to `backend/env.docker`
+    Copy `docker/.env.docker.example` to `backend/.env.docker`
 
     ```bash
-      cp backend/env.docker.example backend/env.docker
+      cp backend/.env.docker.example backend/.env.docker
     ```
 
     > Modify the variables as needed
@@ -89,6 +89,7 @@
     ```
 
     > **First run:** Docker will build the frontend and backend images automatically.
+
     > This may take a few minutes. Subsequent runs will use cached images and start much faster.
 
 9. Verify the Application is Running

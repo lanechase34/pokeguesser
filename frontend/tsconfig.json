@@ -11,15 +11,16 @@
         "noFallthroughCasesInSwitch": true,
         "noUncheckedSideEffectImports": true,
         "noUnusedParameters": true,
+        "noUnusedLocals": true,
         "module": "esnext",
         "moduleResolution": "bundler",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": true,
         "jsx": "react-jsx",
-        "baseUrl": "src",
         "paths": {
-            "@test-utils": ["./test-utils.tsx"]
+            "*": ["./src/*"],
+            "@test-utils": ["./src/test-utils.tsx"]
         },
         "types": ["vite/client", "node", "jest", "@testing-library/jest-dom"]
     },

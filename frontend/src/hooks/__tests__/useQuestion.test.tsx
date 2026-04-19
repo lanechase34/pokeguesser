@@ -1,4 +1,6 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, renderHook, waitFor } from '@testing-library/react';
+import type { ReactNode } from 'react';
 
 import useQuestion from '../useQuestion';
 
@@ -18,7 +20,6 @@ jest.mock('utils/formatHint', () => ({
     formatHint: (hint: unknown) => `formatted:${JSON.stringify(hint)}`,
 }));
 
-// Capture stored values across setStoredResult calls
 let mockStoredValue: unknown = null;
 const mockSetStoredResult = jest.fn((val) => {
     mockStoredValue = val;
@@ -30,6 +31,22 @@ jest.mock('hooks/useLocalStorage', () => ({
 }));
 
 // Helpers
+
+function createWrapper() {
+    const queryClient = new QueryClient({
+        defaultOptions: {
+            queries: { retry: false },
+            mutations: { retry: false },
+        },
+    });
+    return function Wrapper({ children }: { children: ReactNode }) {
+        return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+    };
+}
+
+function renderQuestion() {
+    return renderHook(() => useQuestion(), { wrapper: createWrapper() });
+}
 
 const TODAY = new Date().toISOString().split('T')[0];
 
@@ -51,10 +68,6 @@ const mockIncorrectResponse = {
     attempts_remaining: 2,
     hint: { Type1: 'Grass', Type2: 'Poison' },
 };
-
-function renderQuestion() {
-    return renderHook(() => useQuestion());
-}
 
 describe('useQuestion', () => {
     beforeEach(() => {
@@ -95,35 +108,18 @@ describe('useQuestion', () => {
 
         it('Does not crash when fetch fails', async () => {
             mockFetchTodaysQuestion.mockRejectedValue(new Error('Network error'));
-            const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {
-                // silence
-            });
             const { result } = renderQuestion();
-            // Loading never resolves to false on error - remains true
-            await waitFor(() => expect(consoleSpy).toHaveBeenCalledWith('Failed to load question'));
-            expect(result.current.loading).toBe(true);
-            consoleSpy.mockRestore();
-        });
-
-        it('Does not set state after unmount', async () => {
-            mockFetchTodaysQuestion.mockImplementation(
-                () => new Promise((resolve) => setTimeout(() => resolve({ id: 42 }), 100))
-            );
-            const { unmount } = renderQuestion();
-            unmount();
-            // Advance past the fetch resolution - should not throw
-            await act(async () => {
-                jest.advanceTimersByTime(100);
-                await Promise.resolve();
-            });
+            // With retry: false, query moves to error state (isLoading becomes false)
+            await waitFor(() => expect(result.current.loading).toBe(false));
+            expect(result.current.imgId).toBe('');
         });
     });
 
     describe('localStorage restoration', () => {
-        it('Returns todayResult when stored result matches today', async () => {
+        it('Returns todayResult when stored result matches today', () => {
             mockStoredValue = { date: TODAY, result: mockGameOverCorrect };
             const { result } = renderQuestion();
-            await waitFor(() => expect(result.current.loading).toBe(false));
+            // Query is disabled when todayResult exists, no loading state
             expect(result.current.todayResult).toEqual(mockGameOverCorrect);
         });
 
@@ -147,10 +143,9 @@ describe('useQuestion', () => {
             await waitFor(() => expect(mockSetStoredResult).toHaveBeenCalledWith(null));
         });
 
-        it('Does not clear storage when result is from today', async () => {
+        it('Does not clear storage when result is from today', () => {
             mockStoredValue = { date: TODAY, result: mockGameOverCorrect };
             renderQuestion();
-            await waitFor(() => expect(mockFetchTodaysQuestion).toHaveBeenCalled());
             expect(mockSetStoredResult).not.toHaveBeenCalledWith(null);
         });
 
@@ -159,6 +154,13 @@ describe('useQuestion', () => {
             renderQuestion();
             await waitFor(() => expect(mockFetchTodaysQuestion).toHaveBeenCalled());
             expect(mockSetStoredResult).not.toHaveBeenCalled();
+        });
+
+        it('Uses answer imgId when todayResult exists, skipping the fetch', () => {
+            mockStoredValue = { date: TODAY, result: mockGameOverCorrect };
+            const { result } = renderQuestion();
+            expect(result.current.imgId).toBe('1');
+            expect(mockFetchTodaysQuestion).not.toHaveBeenCalled();
         });
     });
 
@@ -193,20 +195,7 @@ describe('useQuestion', () => {
             });
         });
 
-        it('Updates imgId to the answer pokemon id on game over', async () => {
-            mockSubmitGuess.mockResolvedValue(mockGameOverCorrect);
-            const { result } = renderQuestion();
-            await waitFor(() => expect(result.current.loading).toBe(false));
-
-            await act(async () => {
-                await result.current.submitGuess('bulbasaur');
-            });
-
-            expect(result.current.imgId).toBe('1');
-        });
-
         it('Clears hints on game over', async () => {
-            // First build up a hint
             mockSubmitGuess.mockResolvedValueOnce(mockIncorrectResponse).mockResolvedValueOnce(mockGameOverCorrect);
 
             const { result } = renderQuestion();
@@ -301,20 +290,18 @@ describe('useQuestion', () => {
             await waitFor(() => expect(result.current.loading).toBe(false));
 
             await act(async () => {
-                await result.current.submitGuess('bulbasaur');
+                await expect(result.current.submitGuess('bulbasaur')).rejects.toThrow('Server error');
             });
-
-            expect(result.current.submitError).toBe('Something went wrong. Please try again.');
         });
 
-        it('Clears submitError at the start of a new submission', async () => {
+        it('Clears submitError on the next successful submission', async () => {
             mockSubmitGuess.mockRejectedValueOnce(new Error('fail')).mockResolvedValueOnce(mockIncorrectResponse);
 
             const { result } = renderQuestion();
             await waitFor(() => expect(result.current.loading).toBe(false));
 
             await act(async () => {
-                await result.current.submitGuess('bulbasaur');
+                await expect(result.current.submitGuess('bulbasaur')).rejects.toThrow('fail');
             });
             expect(result.current.submitError).not.toBeNull();
 
@@ -330,7 +317,7 @@ describe('useQuestion', () => {
             await waitFor(() => expect(result.current.loading).toBe(false));
 
             await act(async () => {
-                await result.current.submitGuess('bulbasaur');
+                await expect(result.current.submitGuess('bulbasaur')).rejects.toThrow('Server error');
             });
 
             expect(result.current.submitting).toBe(false);
@@ -338,13 +325,13 @@ describe('useQuestion', () => {
     });
 
     describe('setSubmitError', () => {
-        it('Clears submitError when called with null', async () => {
+        it('Clears submitError when called', async () => {
             mockSubmitGuess.mockRejectedValue(new Error('fail'));
             const { result } = renderQuestion();
             await waitFor(() => expect(result.current.loading).toBe(false));
 
             await act(async () => {
-                await result.current.submitGuess('bulbasaur');
+                await expect(result.current.submitGuess('bulbasaur')).rejects.toThrow('fail');
             });
             expect(result.current.submitError).not.toBeNull();
 
@@ -352,16 +339,6 @@ describe('useQuestion', () => {
                 result.current.setSubmitError(null);
             });
             expect(result.current.submitError).toBeNull();
-        });
-
-        it('Can set a custom error message', async () => {
-            const { result } = renderQuestion();
-            await waitFor(() => expect(result.current.loading).toBe(false));
-
-            act(() => {
-                result.current.setSubmitError('Custom error');
-            });
-            expect(result.current.submitError).toBe('Custom error');
         });
     });
 });

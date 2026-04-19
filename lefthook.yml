@@ -7,7 +7,6 @@ pre-commit:
           - name: format
             glob: "*.py"
             run: backend/dev/Scripts/python.exe -m ruff format .
-
           - name: lint
             glob: "*.py"
             run: backend/dev/Scripts/python.exe -m ruff check . --fix
@@ -22,6 +21,9 @@ pre-commit:
           - name: lint
             root: "frontend/"
             run: npm run lint:fix
+          - name: typecheck
+            root: "frontend/"
+            run: npm run typecheck
 
     - name: mypy
       glob: "*.py"

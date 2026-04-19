@@ -1,8 +1,9 @@
 import useToast, { UseToastReturn } from 'hooks/useToast';
 import { useState } from 'react';
+import type { GuessResponse } from 'types/Guess.type';
 import { validateGuess } from 'validators/validateGuess';
 
-type SubmitGuessFn = (guess: string) => Promise<void>;
+type SubmitGuessFn = (guess: string) => Promise<GuessResponse>;
 
 interface UseGuessFormReturn {
     /** The current value of the guess input */

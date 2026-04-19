@@ -109,6 +109,28 @@
     docker compose down
     ```
 
+### Connecting to the PokeGuesser database
+
+| Setting      | Value             |
+| ------------ | ----------------- |
+| **Host**     | `localhost`       |
+| **Port**     | `5434`            |
+| **Database** | `pokeguesser_db`  |
+| **Username** | `docker_user1234` |
+| **Password** | `docker_pass1234` |
+| **Schema**   | `public`          |
+
+### Connecting to the PogoTracker Mock database
+
+| Setting      | Value                        |
+| ------------ | ---------------------------- |
+| **Host**     | `localhost`                  |
+| **Port**     | `5435`                       |
+| **Database** | `pokeguesser_pogotracker_db` |
+| **Username** | `pogo_docker_user1234`       |
+| **Password** | `pogo_docker_pass1234`       |
+| **Schema**   | `public`                     |
+
 ### NEEDS FORMATTED
 
 Activate the virtual environment

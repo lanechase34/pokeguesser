@@ -1,7 +1,8 @@
+import { useMutation, useQuery } from '@tanstack/react-query';
 import useLocalStorage from 'hooks/useLocalStorage';
 import { useEffect, useMemo, useState } from 'react';
 import { questionService } from 'services/question';
-import type { GameOverResponse } from 'types/Guess.type';
+import type { GameOverResponse, GuessResponse } from 'types/Guess.type';
 import { formatHint } from 'utils/formatHint';
 
 interface StoredResult {
@@ -31,7 +32,7 @@ interface UseQuestionReturn {
      */
     todayResult: GameOverResponse | null;
     /** Submits a validated guess string to the API and updates game state */
-    submitGuess: (guess: string) => Promise<void>;
+    submitGuess: (guess: string) => Promise<GuessResponse>;
     /** Clears the current submit error, e.g. on toast dismiss */
     setSubmitError: (error: string | null) => void;
 }
@@ -47,17 +48,15 @@ interface UseQuestionReturn {
  * @returns Game state and actions
  */
 export default function useQuestion(): UseQuestionReturn {
-    const [loading, setLoading] = useState(true);
-    const [imgId, setImgId] = useState('');
-    const [hints, setHints] = useState<string[]>([]);
-    const [submitting, setSubmitting] = useState(false);
-    const [submitError, setSubmitError] = useState<string | null>(null);
+    const today = new Date().toISOString().split('T')[0];
 
     /**
      * Memoized to prevent re-instantiating the service object on every render,
      * since it's used as a useEffect dependency below.
      */
     const questionAPI = useMemo(() => questionService(), []);
+    const [hints, setHints] = useState<string[]>([]);
+    const [submitError, setSubmitError] = useState<string | null>(null);
 
     const [storedResult, setStoredResult] = useLocalStorage<StoredResult | null>({
         key: 'pokeguesser_result',
@@ -66,34 +65,20 @@ export default function useQuestion(): UseQuestionReturn {
 
     // Store the correct answer in localstorage
     const todayResult = useMemo<GameOverResponse | null>(() => {
-        const today = new Date().toISOString().split('T')[0];
         return storedResult?.date === today ? storedResult.result : null;
-    }, [storedResult]);
+    }, [storedResult, today]);
 
     // Clear stale storage
     useEffect(() => {
         if (storedResult && !todayResult) setStoredResult(null);
     }, [storedResult, todayResult, setStoredResult]);
 
-    // Load question on mount
-    useEffect(() => {
-        let cancelled = false;
-        async function load() {
-            try {
-                const question = await questionAPI.fetchTodaysQuestion();
-                if (!cancelled) {
-                    setImgId(String(question.id));
-                    setLoading(false);
-                }
-            } catch {
-                console.error('Failed to load question');
-            }
-        }
-        void load();
-        return () => {
-            cancelled = true;
-        };
-    }, [questionAPI]);
+    const { isLoading, data: question } = useQuery({
+        queryKey: ['question', today],
+        queryFn: () => questionAPI.fetchTodaysQuestion(),
+        staleTime: Infinity,
+        enabled: !todayResult,
+    });
 
     /**
      * Submits the user's guess and handles all three possible outcomes:
@@ -103,25 +88,33 @@ export default function useQuestion(): UseQuestionReturn {
      *
      * @param guess - A pre-validated guess string
      */
-    async function submitGuess(guess: string) {
-        setSubmitError(null);
-        setSubmitting(true);
-        try {
-            const response = await questionAPI.submitGuess(guess);
+    const { mutateAsync, isPending } = useMutation({
+        mutationFn: (guess: string) => questionAPI.submitGuess(guess),
+        onSuccess: (response) => {
+            setSubmitError(null);
             if ('answer' in response) {
-                const today = new Date().toISOString().split('T')[0];
                 setStoredResult({ date: today, result: response });
-                setImgId(String(response.answer.id));
                 setHints([]);
             } else {
                 setHints((prev) => [...prev, formatHint(response.hint)]);
             }
-        } catch {
-            setSubmitError('Something went wrong. Please try again.');
-        } finally {
-            setSubmitting(false);
-        }
-    }
+        },
+        onError: (error: Error) => {
+            setSubmitError(error.message);
+        },
+    });
 
-    return { loading, imgId, hints, submitting, submitError, todayResult, submitGuess, setSubmitError };
+    // Derive the imgId based on whether we are guessing or the answer is displayed
+    const imgId = todayResult ? String(todayResult.answer.id) : String(question?.id ?? '');
+
+    return {
+        loading: isLoading,
+        imgId,
+        hints,
+        submitting: isPending,
+        submitError,
+        setSubmitError,
+        todayResult,
+        submitGuess: mutateAsync,
+    };
 }

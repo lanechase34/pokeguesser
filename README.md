@@ -13,7 +13,7 @@
     `Ctrl + Shift + P` -> Open user settings (JSON)
 
     Add this line to the bottom
-    `"python.venvPath": "${workspaceFolder}/backend"`
+    "python.venvPath": "${workspaceFolder}/backend"
     ```
 
 2. Create Python Virtual Environment
@@ -60,6 +60,7 @@
 6. Setup GitHooks from project root
 
     ```bash
+    cd ..
     npm install -g lefthook
     lefthook install
     ```
@@ -69,7 +70,7 @@
     Copy `docker/.env.docker.example` to `backend/.env.docker`
 
     ```bash
-      cp backend/.env.docker.example backend/.env.docker
+      cp docker/.env.docker.example backend/.env.docker
     ```
 
     > Modify the variables as needed

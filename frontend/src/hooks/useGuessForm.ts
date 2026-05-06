@@ -1,4 +1,5 @@
-import useToast, { UseToastReturn } from 'hooks/useToast';
+import type { UseToastReturn } from 'hooks/useToast';
+import useToast from 'hooks/useToast';
 import { useState } from 'react';
 import type { GuessResponse } from 'types/Guess.type';
 import { validateGuess } from 'validators/validateGuess';

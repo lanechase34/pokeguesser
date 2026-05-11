@@ -199,7 +199,7 @@ class TestGetTodaysPokemon:
     def test_lazy_creates_pokemon_if_none_exists(
         self, live_pokemon: list[Pokemon]
     ) -> None:
-        """No DailyPokemon for today — should auto-create one"""
+        """No DailyPokemon for today - should auto-create one"""
         assert DailyPokemon.objects.filter(date=date.today()).count() == 0
         result: TodaysPokemonResult | None = GuesserService.get_todays_pokemon()
         assert result is not None

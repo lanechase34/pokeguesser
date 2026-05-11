@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 from datetime import date, timedelta
+from unittest.mock import patch
 
 import pytest
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 from django.utils import timezone
 
 from guesser.models import DailyPokemon, Pokemon
@@ -59,7 +60,8 @@ class TestDailyPokemonModel:
         DailyPokemon.objects.create(date=today, pokemon=live_pokemon[0].id)
 
         with pytest.raises(IntegrityError):
-            DailyPokemon.objects.create(date=today, pokemon=live_pokemon[1].id)
+            with transaction.atomic():  # savepoint so outer transaction survives
+                DailyPokemon.objects.create(date=today, pokemon=live_pokemon[1].id)
 
     def test_daily_pokemon_different_dates_allowed(
         self, live_pokemon: list[Pokemon]
@@ -121,6 +123,18 @@ class TestDailyPokemonModel:
 
         expected = f"{today} - {live_pokemon[0].name}"
         assert str(daily) == expected
+
+    def test_pokemon_name_cached_property_does_not_query_db_twice(
+        self, live_pokemon: list[Pokemon]
+    ) -> None:
+        """pokemon_name must only hit the DB once per instance (cached_property)."""
+        daily = DailyPokemon.objects.create(
+            date=date.today(), pokemon=live_pokemon[0].id
+        )
+        with patch.object(daily, "get_pokemon", wraps=daily.get_pokemon) as spy:
+            _ = daily.pokemon_name
+            _ = daily.pokemon_name  # second access - must not call get_pokemon again
+            spy.assert_called_once()
 
     def test_daily_pokemon_str_with_invalid_pokemon(self) -> None:
         """Test DailyPokemon __str__ handles invalid pokemon gracefully"""

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from functools import cached_property
+
 from django.db import models
 
 
@@ -52,7 +54,7 @@ class DailyPokemon(models.Model):
         except Pokemon.DoesNotExist:
             return None
 
-    @property
+    @cached_property
     def pokemon_name(self) -> str | None:
         """Quick access to pokemon name"""
         poke: Pokemon | None = self.get_pokemon()

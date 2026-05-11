@@ -14,8 +14,13 @@ export default defineConfig(({ mode }) => ({
     base: '/pokeguesser',
     plugins: [
         react(),
-        tsconfigPaths(),
-        visualizer({ open: true }),
+        visualizer({
+            filename: 'bundle-stats.json',
+            json: true,
+        }),
+        visualizer({
+            open: true,
+        }),
         {
             name: 'html-inject-env',
             transformIndexHtml(html) {

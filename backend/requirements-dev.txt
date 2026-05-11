@@ -1,21 +1,24 @@
-pre-commit==4.5.1
+pre-commit==4.6.0
 
 # Formatting + Linting
-isort==7.0.0
-ruff==0.15.1
+isort==8.0.1
+ruff==0.15.12
 
 # Type checking
-pyright==1.1.408
-django-stubs==5.2.9
-djangorestframework-stubs==3.16.8
-mypy==1.19.1
+pyright==1.1.409
+django-stubs==6.0.3
+djangorestframework-stubs==3.16.9
+mypy==1.20.2
 
 # Testing
-pytest==9.0.2
-pytest-django==4.11.1
-djangorestframework-stubs==3.16.8
-pyright==1.1.408
-django-stubs==5.2.9
-pytest-env==1.5.0
-pytest-cov==7.0.0
-psycopg-binary==3.3.2
+pytest==9.0.3
+pytest-django==4.12.0
+djangorestframework-stubs==3.16.9
+pyright==1.1.409
+django-stubs==6.0.3
+pytest-env==1.6.0
+pytest-cov==7.1.0
+psycopg-binary==3.3.4
+
+# Update Packages
+pur==7.4.0

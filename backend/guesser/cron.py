@@ -1,16 +1,13 @@
 import logging
 from datetime import date, timedelta
 
-from django_cron import CronJobBase, Schedule
-
 from .services import GuesserService
 
 logger = logging.getLogger(__name__)
 
 
-class SelectDailyPokemonCron(CronJobBase):
+class SelectDailyPokemonCron:
     RUN_AT_TIMES = ["00:00"]  # Midnight UTC, generate the next day's pokemon
-    schedule = Schedule(run_at_times=RUN_AT_TIMES)
     code = "pokemon.select_daily_pokemon"
 
     def do(self) -> None:

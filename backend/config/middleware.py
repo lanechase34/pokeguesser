@@ -22,6 +22,7 @@ class RequestContextMiddleware:
     """
     Extracts the following request context values and stores it in thread-local storage:
     IP Address
+    The CF-Connecting-IP is safe so only cloudflare IPs can connect
     User Agent
     """
 
@@ -46,7 +47,9 @@ class RequestContextMiddleware:
 
     @staticmethod
     def _get_client_ip(request: HttpRequest) -> str | None:
-        cloudflare_ip: str | None = request.META.get("CF-Connecting-IP")
+        # Django WSGI transforms all http headers to use the 'HTTP_' prefix, uppercase,
+        # and replace hyphens with underscores
+        cloudflare_ip: str | None = request.META.get("HTTP_CF_CONNECTING_IP")
         if cloudflare_ip:
             return cloudflare_ip.split(",")[0].strip()
 

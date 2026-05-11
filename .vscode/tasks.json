@@ -2,7 +2,36 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Lint Python Files",
+            "label": "Format Backend",
+            "type": "shell",
+            "command": "${workspaceFolder}/backend/dev/Scripts/python.exe -m ruff format .",
+            "options": {
+                "cwd": "${workspaceFolder}/backend",
+                "shell": {
+                    "executable": "powershell.exe",
+                    "args": []
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Format Frontend",
+            "type": "shell",
+            "command": "npm run-script format",
+            "group": {
+                "kind": "build"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/frontend",
+                "shell": {
+                    "executable": "powershell.exe",
+                    "args": []
+                }
+            },
+            "detail": "Format Frontend code using Prettier"
+        },
+        {
+            "label": "Lint Backend",
             "type": "shell",
             "command": "${workspaceFolder}/backend/dev/Scripts/python.exe -m ruff check . --fix ",
             "options": {
@@ -15,7 +44,23 @@
             "problemMatcher": []
         },
         {
-            "label": "Type Check Python Files",
+            "label": "Lint Frontend",
+            "type": "shell",
+            "command": "npm run-script lint",
+            "group": {
+                "kind": "build"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/frontend",
+                "shell": {
+                    "executable": "powershell.exe",
+                    "args": []
+                }
+            },
+            "detail": "Lint *.ts and *.tsx files"
+        },
+        {
+            "label": "Typecheck Backend",
             "type": "shell",
             "command": "${workspaceFolder}/backend/dev/Scripts/python.exe -m mypy backend --config-file ${workspaceFolder}/backend/pyproject.toml",
             "options": {
@@ -28,17 +73,20 @@
             "problemMatcher": []
         },
         {
-            "label": "Format Python Files",
+            "label": "Typecheck Frontend",
             "type": "shell",
-            "command": "${workspaceFolder}/backend/dev/Scripts/python.exe -m ruff format .",
+            "command": "npm run typecheck",
+            "group": {
+                "kind": "build"
+            },
             "options": {
-                "cwd": "${workspaceFolder}/backend",
+                "cwd": "${workspaceFolder}/frontend",
                 "shell": {
                     "executable": "powershell.exe",
                     "args": []
                 }
             },
-            "problemMatcher": []
+            "detail": "Typecheck *.ts and *.tsx files"
         }
     ]
 }

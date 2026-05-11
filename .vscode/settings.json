@@ -78,6 +78,7 @@
     // Formatting + Linting
     "ruff.enable": true,
     "[python]": {
+        "editor.formatOnSave": true,
         "editor.defaultFormatter": "charliermarsh.ruff",
         "editor.codeActionsOnSave": {
             "source.organizeImports.ruff": "explicit",

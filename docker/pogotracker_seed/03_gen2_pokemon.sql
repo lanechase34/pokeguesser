@@ -1,0 +1,116 @@
+INSERT INTO pokemon (id,created,updated,"number","name",gender,live,shiny,shadow,shadowshiny,type1,type2,attack,defense,hp,catch,flee,form,mega,sprite,tradable,generation,giga,ses,formtype) VALUES
+	 (12,'2024-10-23 20:35:48.058','2025-12-13 11:34:08.162',231,'Phanpy','',true,true,true,false,'Ground','',107,98,207,50.0,20.0,false,false,'231',true,2.0,false,'231',''),
+	 (27,'2024-10-23 20:35:48.598','2025-12-13 11:34:08.189',165,'Ledyba','',true,true,true,false,'Bug','Flying',72,118,120,50.0,20.0,false,false,'165',true,2.0,false,'165',''),
+	 (33,'2024-10-23 20:35:48.806','2025-12-13 11:34:08.199',212,'Scizor','',true,true,true,true,'Bug','Steel',236,181,172,5.0,5.0,false,false,'212',true,2.0,false,'212',''),
+	 (37,'2024-10-23 20:35:48.946','2025-12-13 11:34:08.205',170,'Chinchou','',true,true,false,false,'Water','Electric',106,97,181,40.0,10.0,false,false,'170',true,2.0,false,'170',''),
+	 (50,'2024-10-23 20:35:49.422','2025-12-13 11:34:08.231',215,'Sneasel','',true,true,true,true,'Dark','Ice',189,146,146,20.0,7.0,false,false,'215',true,2.0,false,'215',''),
+	 (51,'2024-10-23 20:35:49.458','2025-12-13 11:34:08.233',243,'Raikou','',true,true,true,true,'Electric','',241,195,207,2.0,4.0,false,false,'243',true,2.0,false,'243',''),
+	 (47,'2024-10-23 20:35:49.315','2026-03-03 04:22:34.976',208,'Mega Steelix','',true,false,false,false,'Steel','Ground',212,327,181,10.0,5.0,true,true,'208-Mega Steelix',false,2.0,false,'208-Mega','Mega'),
+	 (82,'2024-10-23 20:35:50.569','2025-12-13 11:34:08.284',228,'Houndour','',true,true,true,false,'Dark','Fire',152,83,128,40.0,10.0,false,false,'228',true,2.0,false,'228',''),
+	 (78,'2024-10-23 20:35:50.415','2025-12-13 11:34:08.277',242,'Blissey','',true,true,false,false,'Normal','',129,169,496,5.0,5.0,false,false,'242',true,2.0,false,'242',''),
+	 (64,'2024-10-23 20:35:49.914','2025-12-13 11:34:08.255',218,'Slugma','',true,true,false,false,'Fire','',118,71,120,30.0,10.0,false,false,'218',true,2.0,false,'218','');
+INSERT INTO pokemon (id,created,updated,"number","name",gender,live,shiny,shadow,shadowshiny,type1,type2,attack,defense,hp,catch,flee,form,mega,sprite,tradable,generation,giga,ses,formtype) VALUES
+	 (102,'2024-10-23 20:35:51.322','2025-12-13 11:34:08.319',248,'Tyranitar','',true,true,true,true,'Rock','Dark',251,207,225,5.0,4.0,false,false,'248',true,2.0,false,'248',''),
+	 (61,'2024-10-23 20:35:49.81','2025-12-13 11:34:08.162',232,'Donphan','',true,true,true,false,'Ground','',214,185,207,12.5,7.0,false,false,'232',true,2.0,false,'232',''),
+	 (131,'2024-10-23 20:35:52.491','2025-12-13 11:34:08.355',177,'Natu','',true,true,true,false,'Psychic','Flying',134,89,120,40.0,15.0,false,false,'177',true,2.0,false,'177',''),
+	 (157,'2024-10-23 20:35:53.419','2025-12-13 11:34:08.397',235,'Smeargle','',true,true,false,false,'Normal','',40,83,146,25.0,7.0,false,false,'235',true,2.0,false,'235',''),
+	 (162,'2024-10-23 20:35:53.594','2025-12-13 11:34:08.408',245,'Suicune','',true,true,true,true,'Water','',180,235,225,2.0,4.0,false,false,'245',true,2.0,false,'245',''),
+	 (151,'2024-10-23 20:35:53.222','2025-12-13 11:34:08.276',185,'Sudowoodo','',true,true,true,false,'Rock','',167,176,172,12.5,5.0,false,false,'185',true,2.0,false,'185',''),
+	 (216,'2024-10-23 20:35:55.529','2026-01-29 00:12:19.198',187,'Hoppip','',true,true,true,true,'Grass','Flying',67,94,111,50.0,12.0,false,false,'187',true,2.0,false,'187',''),
+	 (185,'2024-10-23 20:35:54.408','2025-12-13 11:34:08.439',204,'Pineco','',true,true,true,true,'Bug','',108,122,137,40.0,12.0,false,false,'204',true,2.0,false,'204',''),
+	 (214,'2024-10-23 20:35:55.451','2025-12-13 11:34:08.489',203,'Girafarig','',true,true,true,false,'Normal','Psychic',182,133,172,30.0,7.0,false,false,'203',true,2.0,false,'203',''),
+	 (227,'2024-10-23 20:35:55.924','2025-12-13 11:34:08.505',152,'Chikorita','',true,true,true,true,'Grass','',92,122,128,20.0,10.0,false,false,'152',true,2.0,false,'152','');
+INSERT INTO pokemon (id,created,updated,"number","name",gender,live,shiny,shadow,shadowshiny,type1,type2,attack,defense,hp,catch,flee,form,mega,sprite,tradable,generation,giga,ses,formtype) VALUES
+	 (236,'2024-10-23 20:35:56.276','2025-12-13 11:34:08.524',214,'Heracross','',true,true,false,false,'Bug','Fighting',234,179,190,30.0,9.0,false,false,'214',true,2.0,false,'214',''),
+	 (248,'2024-10-23 20:35:56.729','2025-12-13 11:34:08.537',181,'Ampharos','',true,true,true,false,'Electric','',211,169,207,12.5,5.0,false,false,'181',true,2.0,false,'181',''),
+	 (260,'2024-10-23 20:35:57.131','2025-12-13 11:34:08.546',202,'Wobbuffet','',true,true,true,true,'Psychic','',60,106,382,25.0,7.0,false,false,'202',true,2.0,false,'202',''),
+	 (285,'2024-10-23 20:35:57.998','2025-12-13 11:34:08.577',233,'Porygon2','',true,true,true,false,'Normal','',198,180,198,5.0,5.0,false,false,'233',true,2.0,false,'233',''),
+	 (340,'2024-10-23 20:36:00.294','2025-12-13 11:34:08.636',224,'Octillery','',true,true,false,false,'Water','',197,141,181,15.0,7.0,false,false,'224',true,2.0,false,'224',''),
+	 (324,'2024-10-23 20:35:59.707','2026-03-17 07:00:20.459',211,'Qwilfish','',true,true,true,true,'Water','Poison',184,138,163,30.0,8.0,false,false,'211',true,2.0,false,'211',''),
+	 (298,'2024-10-23 20:35:58.49','2025-12-13 11:34:08.588',190,'Aipom','',true,true,true,true,'Normal','',136,112,146,20.0,9.0,false,false,'190',true,2.0,false,'190',''),
+	 (330,'2024-10-23 20:35:59.925','2025-12-13 11:34:08.625',227,'Skarmory','',true,true,true,false,'Steel','Flying',148,226,163,20.0,9.0,false,false,'227',true,2.0,false,'227',''),
+	 (307,'2024-10-23 20:35:58.822','2026-03-17 07:00:20.457',213,'Shuckle','',true,true,true,true,'Bug','Rock',17,396,85,30.0,7.0,false,false,'213',true,2.0,false,'213',''),
+	 (333,'2024-10-23 20:36:00.031','2025-12-13 11:34:08.629',155,'Cyndaquil','',true,true,true,true,'Fire','',116,93,118,20.0,10.0,false,false,'155',true,2.0,false,'155','');
+INSERT INTO pokemon (id,created,updated,"number","name",gender,live,shiny,shadow,shadowshiny,type1,type2,attack,defense,hp,catch,flee,form,mega,sprite,tradable,generation,giga,ses,formtype) VALUES
+	 (345,'2024-10-23 20:36:00.474','2025-12-13 11:34:08.64',207,'Gligar','',true,true,true,true,'Ground','Flying',143,184,163,20.0,7.0,false,false,'207',true,2.0,false,'207',''),
+	 (335,'2024-10-23 20:36:00.1','2025-12-13 11:34:08.235',183,'Marill','',true,true,false,false,'Water','Fairy',37,93,172,50.0,10.0,false,false,'183',true,2.0,false,'183',''),
+	 (367,'2024-10-23 20:36:01.363','2025-12-13 11:34:08.661',221,'Piloswine','',true,true,true,false,'Ice','Ground',181,138,225,12.5,6.0,false,false,'221',true,2.0,false,'221',''),
+	 (362,'2024-10-23 20:36:01.172','2025-12-13 11:34:08.656',222,'Corsola','',true,true,false,false,'Water','Rock',118,156,146,30.0,12.0,false,false,'222',true,2.0,false,'222',''),
+	 (404,'2024-10-23 20:36:02.723','2025-12-13 11:34:08.35',186,'Politoed','',true,true,true,true,'Water','',174,179,207,10.0,5.0,false,false,'186',true,2.0,false,'186',''),
+	 (356,'2024-10-23 20:36:00.927','2025-12-13 11:34:08.44',205,'Forretress','',true,true,true,true,'Bug','Steel',161,205,181,15.0,7.0,false,false,'205',true,2.0,false,'205',''),
+	 (395,'2024-10-23 20:36:02.383','2026-02-26 22:14:09.621',214,'Mega Heracross','',true,false,false,false,'Bug','Fighting',334,223,190,30.0,9.0,true,true,'214-Mega Heracross',false,2.0,false,'214-Mega','Mega'),
+	 (445,'2024-10-23 20:36:04.363','2025-12-13 11:34:08.745',167,'Spinarak','',true,true,false,false,'Bug','Poison',105,73,120,50.0,20.0,false,false,'167',true,2.0,false,'167',''),
+	 (434,'2024-10-23 20:36:03.931','2025-12-13 11:34:08.735',175,'Togepi','',true,true,false,false,'Fairy','',67,116,111,25.0,5.0,false,false,'175',true,2.0,false,'175',''),
+	 (439,'2024-10-23 20:36:04.137','2025-12-13 11:34:08.742',189,'Jumpluff','',true,true,true,false,'Grass','Flying',118,183,181,12.5,5.0,false,false,'189',true,2.0,false,'189','');
+INSERT INTO pokemon (id,created,updated,"number","name",gender,live,shiny,shadow,shadowshiny,type1,type2,attack,defense,hp,catch,flee,form,mega,sprite,tradable,generation,giga,ses,formtype) VALUES
+	 (438,'2024-10-23 20:36:04.093','2025-12-13 11:34:08.741',234,'Stantler','',true,true,true,true,'Normal','',192,131,177,30.0,8.0,false,false,'234',true,2.0,false,'234',''),
+	 (453,'2024-10-23 20:36:04.652','2025-12-13 11:34:08.746',197,'Umbreon','',true,true,false,false,'Dark','',126,240,216,12.5,5.0,false,false,'197',true,2.0,false,'197',''),
+	 (446,'2024-10-23 20:36:04.395','2025-12-13 11:34:08.512',196,'Espeon','',true,true,false,false,'Psychic','',261,175,163,12.5,5.0,false,false,'196',true,2.0,false,'196',''),
+	 (454,'2024-10-23 20:36:04.699','2025-12-13 11:34:08.754',241,'Miltank','',true,true,false,false,'Normal','',157,193,216,20.0,8.0,false,false,'241',true,2.0,false,'241',''),
+	 (432,'2024-10-23 20:36:03.853','2025-12-31 06:00:32.797',157,'Typhlosion','',true,true,true,false,'Fire','',223,173,186,5.0,5.0,false,false,'157',true,2.0,false,'157',''),
+	 (416,'2024-10-23 20:36:03.224','2025-12-31 06:00:32.785',153,'Bayleef','',true,true,true,false,'Grass','',122,155,155,12.5,7.0,false,false,'153',true,2.0,false,'153',''),
+	 (506,'2024-10-23 20:36:07.573','2025-12-13 11:34:08.76',199,'Slowking','',true,true,true,false,'Water','Psychic',177,180,216,10.0,5.0,false,false,'199',true,2.0,false,'199',''),
+	 (501,'2024-10-23 20:36:07.398','2025-12-13 11:34:08.805',198,'Murkrow','',true,true,true,true,'Dark','Flying',175,87,155,20.0,10.0,false,false,'198',true,2.0,false,'198',''),
+	 (507,'2024-10-23 20:36:07.615','2025-12-13 11:34:08.81',191,'Sunkern','',true,true,false,false,'Grass','',55,55,102,50.0,9.0,false,false,'191',true,2.0,false,'191',''),
+	 (483,'2024-10-23 20:36:06.521','2025-12-13 11:34:08.789',173,'Cleffa','',true,true,false,false,'Fairy','',75,79,137,25.0,5.0,false,false,'173',true,2.0,false,'173','');
+INSERT INTO pokemon (id,created,updated,"number","name",gender,live,shiny,shadow,shadowshiny,type1,type2,attack,defense,hp,catch,flee,form,mega,sprite,tradable,generation,giga,ses,formtype) VALUES
+	 (476,'2024-10-23 20:36:06.158','2025-12-13 11:34:08.78',164,'Noctowl','',true,true,false,false,'Normal','Flying',145,156,225,15.0,7.0,false,false,'164',true,2.0,false,'164',''),
+	 (492,'2024-10-23 20:36:07.022','2026-02-26 22:15:41.794',212,'Mega Scizor','',true,false,false,false,'Bug','Steel',279,250,172,5.0,5.0,true,true,'212-Mega Scizor',false,2.0,false,'212-Mega','Mega'),
+	 (548,'2024-10-23 20:36:09.66','2025-12-13 11:34:08.849',246,'Larvitar','',true,true,true,true,'Rock','Ground',115,93,137,40.0,10.0,false,false,'246',true,2.0,false,'246',''),
+	 (536,'2024-10-23 20:36:09','2025-12-13 11:34:08.839',225,'Delibird','',true,true,true,false,'Ice','Flying',128,90,128,20.0,20.0,false,false,'225',true,2.0,false,'225',''),
+	 (559,'2024-10-23 20:36:10.074','2025-12-13 11:34:08.86',158,'Totodile','',true,true,true,true,'Water','',117,109,137,20.0,10.0,false,false,'158',true,2.0,false,'158',''),
+	 (556,'2024-10-23 20:36:09.959','2025-12-13 11:34:08.858',200,'Misdreavus','',true,true,true,false,'Ghost','',167,154,155,30.0,7.0,false,false,'200',true,2.0,false,'200',''),
+	 (578,'2024-10-23 20:36:10.846','2025-12-13 11:34:08.878',174,'Igglybuff','',true,true,false,false,'Normal','Fairy',69,32,207,25.0,5.0,false,false,'174',true,2.0,false,'174',''),
+	 (531,'2024-10-23 20:36:08.735','2025-12-13 11:34:08.829',169,'Crobat','',true,true,true,true,'Poison','Flying',194,178,198,10.0,5.0,false,false,'169',true,2.0,false,'169',''),
+	 (634,'2024-10-23 20:36:13.214','2025-12-31 06:00:32.806',160,'Feraligatr','',true,true,true,false,'Water','',205,188,198,5.0,5.0,false,false,'160',true,2.0,false,'160',''),
+	 (629,'2024-10-23 20:36:13.017','2025-12-31 06:00:32.79',156,'Quilava','',true,true,true,false,'Fire','',158,126,151,12.5,7.0,false,false,'156',true,2.0,false,'156','');
+INSERT INTO pokemon (id,created,updated,"number","name",gender,live,shiny,shadow,shadowshiny,type1,type2,attack,defense,hp,catch,flee,form,mega,sprite,tradable,generation,giga,ses,formtype) VALUES
+	 (601,'2024-10-23 20:36:11.874','2025-12-13 11:34:08.896',236,'Tyrogue','',true,true,false,false,'Fighting','',64,64,111,25.0,20.0,false,false,'236',true,2.0,false,'236',''),
+	 (585,'2024-10-23 20:36:11.125','2025-12-13 11:34:08.19',166,'Ledian','',true,true,true,false,'Bug','Flying',107,179,146,15.0,7.0,false,false,'166',true,2.0,false,'166',''),
+	 (619,'2024-10-23 20:36:12.594','2025-12-13 11:34:08.913',195,'Quagsire','',true,true,true,false,'Water','Ground',152,143,216,15.0,7.0,false,false,'195',true,2.0,false,'195',''),
+	 (651,'2024-10-23 20:36:13.934','2025-12-13 11:34:08.94',180,'Flaaffy','',true,true,true,false,'Electric','',145,109,172,25.0,7.0,false,false,'180',true,2.0,false,'180',''),
+	 (647,'2024-10-23 20:36:13.732','2025-12-13 11:34:08.935',216,'Teddiursa','',true,true,true,true,'Normal','',142,93,155,50.0,20.0,false,false,'216',true,2.0,false,'216',''),
+	 (675,'2024-10-23 20:36:15.196','2025-12-13 11:34:08.285',229,'Houndoom','',true,true,true,false,'Dark','Fire',224,144,181,15.0,6.0,false,false,'229',true,2.0,false,'229',''),
+	 (642,'2024-10-23 20:36:13.531','2025-12-13 11:34:08.931',244,'Entei','',true,true,true,true,'Fire','',235,171,251,2.0,4.0,false,false,'244',true,2.0,false,'244',''),
+	 (686,'2024-10-23 20:36:15.748','2025-12-13 11:34:08.493',188,'Skiploom','',true,true,true,false,'Grass','Flying',91,120,146,25.0,7.0,false,false,'188',true,2.0,false,'188',''),
+	 (655,'2024-10-23 20:36:14.179','2025-12-31 06:00:32.807',230,'Kingdra','',true,true,true,false,'Water','Dragon',194,194,181,10.0,5.0,false,false,'230',true,2.0,false,'230',''),
+	 (656,'2024-10-23 20:36:14.236','2025-12-13 11:34:08.944',193,'Yanma','',true,true,false,false,'Bug','Flying',154,94,163,30.0,10.0,false,false,'193',true,2.0,false,'193','');
+INSERT INTO pokemon (id,created,updated,"number","name",gender,live,shiny,shadow,shadowshiny,type1,type2,attack,defense,hp,catch,flee,form,mega,sprite,tradable,generation,giga,ses,formtype) VALUES
+	 (715,'2024-10-23 20:36:17.082','2025-12-13 11:34:08.992',250,'Ho-oh','',true,true,true,true,'Fire','Flying',239,244,214,2.0,4.0,false,false,'250',true,2.0,false,'250',''),
+	 (735,'2024-10-23 20:36:17.995','2025-12-13 11:34:08.336',182,'Bellossom','',true,true,true,false,'Grass','',169,186,181,5.0,5.0,false,false,'182',true,2.0,false,'182',''),
+	 (730,'2024-10-23 20:36:17.788','2025-12-13 11:34:09.011',210,'Granbull','',true,true,true,false,'Fairy','',212,131,207,15.0,8.0,false,false,'210',true,2.0,false,'210',''),
+	 (754,'2024-10-23 20:36:18.843','2025-12-13 11:34:09.031',163,'Hoothoot','',true,true,false,false,'Normal','Flying',67,88,155,50.0,15.0,false,false,'163',true,2.0,false,'163',''),
+	 (791,'2024-10-23 20:36:20.367','2025-12-31 06:00:32.805',159,'Croconaw','',true,true,true,false,'Water','',150,142,163,12.5,7.0,false,false,'159',true,2.0,false,'159',''),
+	 (786,'2024-10-23 20:36:20.158','2025-12-31 06:00:32.796',154,'Meganium','',true,true,true,false,'Grass','',168,202,190,5.0,5.0,false,false,'154',true,2.0,false,'154',''),
+	 (804,'2024-10-23 20:36:20.956','2025-12-13 11:34:09.064',239,'Elekid','',true,true,false,false,'Electric','',135,101,128,25.0,20.0,false,false,'239',true,2.0,false,'239',''),
+	 (839,'2024-10-23 20:36:22.391','2025-12-13 11:34:08.85',247,'Pupitar','',true,true,true,true,'Rock','Ground',155,133,172,10.0,7.0,false,false,'247',true,2.0,false,'247',''),
+	 (850,'2024-10-23 20:36:22.874','2025-12-13 11:34:09.098',240,'Magby','',true,true,false,false,'Fire','',151,99,128,25.0,20.0,false,false,'240',true,2.0,false,'240',''),
+	 (857,'2024-10-23 20:36:23.188','2025-12-13 11:34:09.105',249,'Lugia','',true,true,true,true,'Psychic','Flying',193,310,235,2.0,4.0,false,false,'249',true,2.0,false,'249','');
+INSERT INTO pokemon (id,created,updated,"number","name",gender,live,shiny,shadow,shadowshiny,type1,type2,attack,defense,hp,catch,flee,form,mega,sprite,tradable,generation,giga,ses,formtype) VALUES
+	 (907,'2024-10-23 20:36:25.239','2025-12-13 11:34:08.356',178,'Xatu','',true,true,true,false,'Psychic','Flying',192,146,163,15.0,7.0,false,false,'178',true,2.0,false,'178',''),
+	 (912,'2024-10-23 20:36:25.482','2025-12-13 11:34:08.811',192,'Sunflora','',true,true,false,false,'Grass','',185,135,181,10.0,7.0,false,false,'192',true,2.0,false,'192',''),
+	 (920,'2024-10-23 20:36:25.879','2025-12-13 11:34:09.137',172,'Pichu','',true,true,false,false,'Electric','',77,53,85,25.0,5.0,false,false,'172',true,2.0,false,'172',''),
+	 (923,'2024-10-23 20:36:26.035','2025-12-13 11:34:09.139',251,'Celebi','',true,true,false,false,'Psychic','Grass',210,210,225,100.0,0.0,false,false,'251',false,2.0,false,'251',''),
+	 (921,'2024-10-23 20:36:25.932','2025-12-13 11:34:08.206',171,'Lanturn','',true,true,false,false,'Water','Electric',146,137,268,15.0,7.0,false,false,'171',true,2.0,false,'171',''),
+	 (977,'2024-10-23 20:36:29.615','2025-12-13 11:34:08.746',168,'Ariados','',true,true,false,false,'Bug','Poison',161,124,172,15.0,7.0,false,false,'168',true,2.0,false,'168',''),
+	 (982,'2024-10-23 20:36:29.984','2025-12-13 11:34:08.581',226,'Mantine','',true,true,false,false,'Water','Flying',148,226,163,30.0,7.0,false,false,'226',true,2.0,false,'226',''),
+	 (976,'2024-10-23 20:36:29.546','2025-12-13 11:34:09.163',179,'Mareep','',true,true,true,false,'Electric','',114,79,146,50.0,10.0,false,false,'179',true,2.0,false,'179',''),
+	 (967,'2024-10-23 20:36:28.915','2025-12-13 11:34:08.735',176,'Togetic','',true,true,false,false,'Fairy','Flying',139,181,146,20.0,5.0,false,false,'176',true,2.0,false,'176',''),
+	 (981,'2024-10-23 20:36:29.911','2025-12-13 11:34:09.16',208,'Steelix','',true,true,true,false,'Steel','Ground',148,272,181,10.0,5.0,false,false,'208',true,2.0,false,'208','');
+INSERT INTO pokemon (id,created,updated,"number","name",gender,live,shiny,shadow,shadowshiny,type1,type2,attack,defense,hp,catch,flee,form,mega,sprite,tradable,generation,giga,ses,formtype) VALUES
+	 (941,'2024-10-23 20:36:27.019','2025-12-13 11:34:09.149',194,'Wooper','',true,true,true,false,'Water','Ground',75,66,146,40.0,10.0,false,false,'194',true,2.0,false,'194',''),
+	 (959,'2024-10-23 20:36:28.327','2025-12-13 11:34:08.631',184,'Azumarill','',true,true,false,false,'Water','Fairy',112,152,225,15.0,7.0,false,false,'184',true,2.0,false,'184',''),
+	 (933,'2024-10-23 20:36:26.575','2025-12-13 11:34:08.256',219,'Magcargo','',true,true,false,false,'Fire','Rock',139,191,137,12.5,6.0,false,false,'219',true,2.0,false,'219',''),
+	 (1003,'2024-10-23 20:36:31.665','2025-12-13 11:34:09.177',206,'Dunsparce','',true,true,false,false,'Normal','',131,128,225,30.0,20.0,false,false,'206',true,2.0,false,'206',''),
+	 (1005,'2024-10-23 20:36:31.885','2025-12-13 11:34:09.178',161,'Sentret','',true,true,false,false,'Normal','',79,73,111,50.0,20.0,false,false,'161',true,2.0,false,'161',''),
+	 (230,'2024-10-23 20:35:56.039','2026-03-17 07:00:20.455',237,'Hitmontop','',true,true,true,true,'Fighting','',173,207,137,10.0,5.0,false,false,'237',true,2.0,false,'237',''),
+	 (505,'2024-10-23 20:36:07.537','2025-12-13 11:34:08.809',217,'Ursaring','',true,true,true,true,'Normal','',236,144,207,15.0,7.0,false,false,'217',true,2.0,false,'217',''),
+	 (687,'2024-10-23 20:36:15.794','2025-12-13 11:34:08.965',238,'Smoochum','',true,true,false,false,'Ice','Psychic',153,91,128,25.0,20.0,false,false,'238',true,2.0,false,'238',''),
+	 (334,'2024-10-23 20:36:00.065','2026-03-03 04:22:40.937',229,'Mega Houndoom','',true,false,false,false,'Dark','Fire',289,194,181,15.0,6.0,true,true,'229-Mega Houndoom',false,2.0,false,'229-Mega','Mega'),
+	 (421,'2024-10-23 20:36:03.41','2026-03-03 04:22:31.436',181,'Mega Ampharos','',true,false,false,false,'Electric','Dragon',294,203,207,12.5,5.0,true,true,'181-Mega Ampharos',false,2.0,false,'181-Mega','Mega');
+INSERT INTO pokemon (id,created,updated,"number","name",gender,live,shiny,shadow,shadowshiny,type1,type2,attack,defense,hp,catch,flee,form,mega,sprite,tradable,generation,giga,ses,formtype) VALUES
+	 (893,'2024-10-23 20:36:24.664','2026-03-17 07:00:31.363',220,'Swinub','',true,true,true,true,'Ice','Ground',90,69,137,30.0,10.0,false,false,'220',true,2.0,false,'220',''),
+	 (964,'2024-10-23 20:36:28.699','2026-02-26 22:14:41.028',248,'Mega Tyranitar','',true,false,false,false,'Rock','Dark',309,276,225,5.0,5.0,true,true,'248-Mega Tyranitar',false,2.0,false,'248-Mega','Mega'),
+	 (942,'2024-10-23 20:36:27.082','2026-03-17 07:00:31.367',209,'Snubbull','',true,true,true,true,'Fairy','',137,85,155,40.0,10.0,false,false,'209',true,2.0,false,'209',''),
+	 (700,'2024-10-23 20:36:16.364','2025-12-13 11:34:08.978',162,'Furret','',true,true,false,false,'Normal','',148,125,198,15.0,7.0,false,false,'162',true,2.0,false,'162',''),
+	 (954,'2024-10-23 20:36:27.939','2025-12-13 11:34:09.153',223,'Remoraid','',true,true,false,false,'Water','',127,69,111,50.0,10.0,false,false,'223',true,2.0,false,'223','');

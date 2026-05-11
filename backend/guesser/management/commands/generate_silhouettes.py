@@ -1,16 +1,14 @@
 from __future__ import annotations
 
 import argparse
-import os
 import subprocess
 from pathlib import Path
+from typing import Any
 
+from django.conf import settings
 from django.core.management.base import BaseCommand
-from dotenv import load_dotenv
 
 from guesser.models import Pokemon
-
-load_dotenv()
 
 
 class Command(BaseCommand):
@@ -18,10 +16,13 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser: argparse.ArgumentParser) -> None:
         parser.add_argument(
-            "--generation", type=float, help="Pokemon generation (e.g., 1, 1.5, 2)"
+            "--generation",
+            type=float,
+            required=True,
+            help="Pokemon generation (e.g., 1, 1.5, 2)",
         )
 
-    def handle(self, *args: str, **options: str) -> None:
+    def handle(self, *args: Any, **options: Any) -> None:
         generation = options["generation"]
 
         # Validate decimal points
@@ -42,8 +43,7 @@ class Command(BaseCommand):
         silhouettes_dir = base_dir / "silhouettes"
 
         # ImageMagick path
-        magick_path = os.getenv("MAGICK_PATH")
-
+        magick_path = settings.MAGICK_PATH
         if not magick_path:
             self.stdout.write(self.style.ERROR("MAGICK_PATH not defined"))
             return

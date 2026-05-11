@@ -60,7 +60,7 @@ class QuestionView(APIView):
             return Response(
                 {
                     "id": daily_question["pokemon"].id,
-                    "date": daily_question["daily_pokemon"].created,
+                    "date": daily_question["daily_pokemon"].date,
                 },
                 status=status.HTTP_200_OK,
             )
@@ -102,15 +102,18 @@ class GuessView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        attempt = throttle.increment_counter(self)
         guess: str = serializer.validated_data["guess"]
 
         # Check the guess
+        incremented = False
         try:
             result = GuesserService.check_guess(guess)
 
             if result is None:
-                raise KeyError("Today''s guess not found")
+                raise KeyError("Today's guess not found")
+
+            attempt = throttle.increment_counter(self)
+            incremented = True
 
             # If correct or out of attempts
             if result["correct"] or attempt == 3:
@@ -142,7 +145,11 @@ class GuessView(APIView):
                 {"error": "Invalid Guess"}, status=status.HTTP_400_BAD_REQUEST
             )
 
-        except (KeyError, Exception):
+        except Exception:
+            # Don't increment counter on server error
+            if incremented:
+                throttle.decrement_counter(self)
+
             logger.exception("Failed to check user's guess")
             return Response(
                 {"error": "An error occurred processing your guess"},

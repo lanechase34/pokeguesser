@@ -16,12 +16,11 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.http import JsonResponse
+from django.http import HttpRequest, JsonResponse
 from django.urls import include, path
-from rest_framework.request import Request
 
 
-def health_check(request: Request) -> JsonResponse:
+def health_check(request: HttpRequest) -> JsonResponse:
     """Simple health check endpoint"""
     return JsonResponse({"status": "Ok!"}, status=200)
 

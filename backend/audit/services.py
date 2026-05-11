@@ -1,6 +1,6 @@
 import logging
-import threading
 import traceback
+from concurrent.futures import ThreadPoolExecutor
 from typing import Optional
 
 from config.middleware import get_request_context
@@ -8,6 +8,8 @@ from config.middleware import get_request_context
 from .models import AuditLog
 
 logger = logging.getLogger(__name__)
+
+_audit_executor = ThreadPoolExecutor(max_workers=4, thread_name_prefix="audit-log")
 
 
 def _create_audit_log_in_thread(
@@ -77,21 +79,17 @@ class AuditService:
         """
         context = get_request_context()
 
-        thread = threading.Thread(
-            target=_create_audit_log_in_thread,
-            args=(
-                app_name,
-                event_type,
-                message,
-                level,
-                detail,
-                triggered_by,
-                context["ip_address"],
-                context["user_agent"],
-            ),
-            daemon=True,
+        _audit_executor.submit(
+            _create_audit_log_in_thread,
+            app_name,
+            event_type,
+            message,
+            level,
+            detail,
+            triggered_by,
+            context["ip_address"],
+            context["user_agent"],
         )
-        thread.start()
 
     @staticmethod
     def log_error(

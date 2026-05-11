@@ -7,6 +7,18 @@ import useQuestion from 'hooks/useQuestion';
 import useToast from 'hooks/useToast';
 import { useEffect, useMemo } from 'react';
 
+const GameLayout = ({ todaysDate, children }: { todaysDate: string; children: React.ReactNode }) => (
+    <div className="game-container">
+        <div className="game-card">
+            <div className="header">
+                <h1 className="title">Who's That Pokémon?</h1>
+                <p className="date">{todaysDate}</p>
+            </div>
+            {children}
+        </div>
+    </div>
+);
+
 export default function Question() {
     const { loading, imgId, hints, submitting, submitError, todayResult, submitGuess, setSubmitError } = useQuestion();
 
@@ -39,64 +51,67 @@ export default function Question() {
 
     const countdown = useCountdown(midnight);
 
+    const questionError = !loading && !todayResult && !imgId;
+
     if (loading) {
         return (
-            <div className="flex justify-center items-center min-h-screen">
-                <div className="pokeball-loader"></div>
-            </div>
+            <GameLayout todaysDate={todaysDate}>
+                <div className="flex justify-content-center items-center align-items-center">
+                    <div className="pokeball-loader"></div>
+                </div>
+            </GameLayout>
+        );
+    }
+
+    if (questionError) {
+        return (
+            <GameLayout todaysDate={todaysDate}>
+                <p className="error-message">Unable to load today's question. Please try again later.</p>
+            </GameLayout>
         );
     }
 
     return (
-        <div className="game-container">
-            <div className="game-card">
-                <div className="header">
-                    <h1 className="title">Who's That Pokémon?</h1>
-                    <p className="date">{todaysDate}</p>
+        <GameLayout todaysDate={todaysDate}>
+            <div className="silhouette-container">
+                <div className="silhouette-glow">
+                    <img
+                        src={
+                            todayResult
+                                ? `/pokeguesser/images/${todayResult.answer.number}.webp`
+                                : `/pokeguesser/silhouettes/${imgId}.webp`
+                        }
+                        alt={todayResult ? "Today's answer" : 'Silhouette to guess'}
+                        className={todayResult ? 'answer' : 'silhouette'}
+                    />
                 </div>
-
-                <div className="silhouette-container">
-                    <div className="silhouette-glow">
-                        <img
-                            src={
-                                todayResult
-                                    ? `/pokeguesser/images/${todayResult.answer.number}.webp`
-                                    : `/pokeguesser/silhouettes/${imgId}.webp`
-                            }
-                            alt={todayResult ? "Today's answer" : 'Silhouette to guess'}
-                            className={todayResult ? 'answer' : 'silhouette'}
-                        />
-                    </div>
-                </div>
-
-                <HintsList hints={hints} />
-
-                {todayResult?.answer.id ? (
-                    <AnswerCard result={todayResult} countdown={countdown} />
-                ) : (
-                    <form
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                            void handleSubmit();
-                        }}
-                        className="guess-form"
-                    >
-                        <input
-                            type="text"
-                            value={guess}
-                            onChange={(e) => {
-                                handleChange(e.target.value);
-                            }}
-                            placeholder="Enter Pokémon name..."
-                            className={`guess-input ${hasValidationError ? 'guess-input-error' : ''}`}
-                            disabled={submitting}
-                        />
-                        <button type="submit" disabled={submitting || !guess.trim()} className="submit-button">
-                            {submitting ? 'Checking...' : 'Guess!'}
-                        </button>
-                    </form>
-                )}
             </div>
+
+            <HintsList hints={hints} />
+
+            {todayResult?.answer.id ? (
+                <AnswerCard result={todayResult} countdown={countdown} />
+            ) : (
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        void handleSubmit();
+                    }}
+                    className="guess-form"
+                >
+                    <input
+                        type="text"
+                        value={guess}
+                        onChange={(e) => handleChange(e.target.value)}
+                        placeholder="Enter Pokémon name..."
+                        className={`guess-input ${hasValidationError ? 'guess-input-error' : ''}`}
+                        disabled={submitting}
+                    />
+                    <button type="submit" disabled={submitting || !guess.trim()} className="submit-button">
+                        {submitting ? 'Checking...' : 'Guess!'}
+                    </button>
+                </form>
+            )}
 
             {/* Toasts */}
             <div className="toast-container">
@@ -117,6 +132,6 @@ export default function Question() {
                     />
                 )}
             </div>
-        </div>
+        </GameLayout>
     );
 }

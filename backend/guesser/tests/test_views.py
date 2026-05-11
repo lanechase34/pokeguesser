@@ -84,6 +84,7 @@ class QuestionViewTest(APITestCase):
     """Test QuestionView GET endpoint."""
 
     def setUp(self):
+        cache.clear()
         """Set up test fixtures."""
         self.client = APIClient()
         self.url = "/api/v1/question"
@@ -151,6 +152,7 @@ class GuessViewTest(APITestCase):
     """Test GuessView POST endpoint with throttling."""
 
     def setUp(self):
+        cache.clear()
         """Set up test fixtures."""
         self.client = APIClient()
         self.url = "/api/v1/guess"
@@ -417,6 +419,7 @@ class ThrottleEnforcementTest(APITestCase):
     """Test throttle enforcement in detail."""
 
     def setUp(self):
+        cache.clear()
         """Set up test fixtures."""
         self.client = APIClient()
         self.url = "/api/v1/guess"
@@ -526,6 +529,7 @@ class RaceConditionTest(APITestCase):
     """Test race conditions and concurrent requests."""
 
     def setUp(self):
+        cache.clear()
         """Set up test fixtures."""
         self.client = APIClient()
         self.url = "/api/v1/guess"
@@ -621,6 +625,7 @@ class EdgeCaseTest(APITestCase):
     """Test edge cases and boundary conditions."""
 
     def setUp(self):
+        cache.clear()
         """Set up test fixtures."""
         self.client = APIClient()
         self.url = "/api/v1/guess"
@@ -656,8 +661,11 @@ class EdgeCaseTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["answer"]["type2"], "")
 
+    @patch("guesser.views.GuesserService.get_todays_pokemon")
     @patch("guesser.views.GuesserService.check_guess")
-    def test_pokemon_with_two_types(self, mock_check_guess: MagicMock):
+    def test_pokemon_with_two_types(
+        self, mock_check_guess: MagicMock, mock_get_todays_pokemon: MagicMock
+    ):
         """Test Pokemon with two types."""
         dual_type_pokemon = Pokemon.objects.create(
             id=2,
@@ -676,6 +684,11 @@ class EdgeCaseTest(APITestCase):
             "correct": True,
             "guessed_pokemon": dual_type_pokemon,
             "hints": [],
+        }
+
+        mock_get_todays_pokemon.return_value = {
+            "pokemon": dual_type_pokemon,
+            "daily_pokemon": MagicMock(),
         }
 
         response = self.client.post(self.url, {"guess": "bulbasaur"})
@@ -755,6 +768,7 @@ class CacheBackendTest(APITestCase):
     """Test with different cache backends."""
 
     def setUp(self):
+        cache.clear()
         """Set up test fixtures."""
         self.client = APIClient()
         self.url = "/api/v1/guess"

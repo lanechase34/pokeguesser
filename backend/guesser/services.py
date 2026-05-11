@@ -1,10 +1,11 @@
 from __future__ import annotations
 
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 from typing import Dict, TypedDict, cast
 
 from django.core.cache import cache
 from django.db import transaction
+from django.utils import timezone
 
 from audit.services import AuditService
 
@@ -47,11 +48,14 @@ class GuesserService:
 
         # Check if pokemon already exists for this date
         try:
-            # get_or_create handles all locking internally
-            daily_pokemon, created = DailyPokemon.objects.get_or_create(
-                date=target_date,
-                defaults={"pokemon": GuesserService._get_random_unused_pokemon_id()},
-            )
+            with transaction.atomic():  # savepoint; only this rolls back on failure
+                # get_or_create handles all locking internally
+                daily_pokemon, created = DailyPokemon.objects.get_or_create(
+                    date=target_date,
+                    defaults={
+                        "pokemon": GuesserService._get_random_unused_pokemon_id()
+                    },
+                )
 
             if created:
                 AuditService.log(
@@ -98,7 +102,7 @@ class GuesserService:
                 mega=False,
                 giga=False,
                 gender="",  # avoid gender-specific species
-                generation=1,  # locked to gen1 only
+                generation__in=[1, 2],  # locked to gen1,2 only
             )
             .exclude(name__icontains="unown")  # Exclude unown
             .exclude(id__in=used_pokemon_ids)
@@ -173,7 +177,7 @@ class GuesserService:
                 app_name="guesser",
                 event_type="GET_TODAYS_POKEMON",
                 message=(
-                    f"DailyPokemon references non-existent"
+                    f"DailyPokemon references non-existent "
                     f"Pokemon ID {daily_pokemon.pokemon}"
                 ),
             )
@@ -185,10 +189,11 @@ class GuesserService:
         }
 
         # Cache until midnight
-        now = datetime.now()
-        seconds_until_midnight = (
-            datetime.combine(now.date() + timedelta(days=1), datetime.min.time()) - now
-        ).seconds
+        now = timezone.now()
+        midnight = (now + timedelta(days=1)).replace(
+            hour=0, minute=0, second=0, microsecond=0
+        )
+        seconds_until_midnight = int((midnight - now).total_seconds())
         cache.set(cache_key, result, timeout=seconds_until_midnight)
         return result
 
@@ -226,7 +231,6 @@ class GuesserService:
             "hints": [
                 {"Type1": today["pokemon"].type1, "Type2": today["pokemon"].type2},
                 {"Generation": int(today["pokemon"].generation)},
-                {},
             ],
         }
 

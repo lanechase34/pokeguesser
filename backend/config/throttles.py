@@ -125,6 +125,23 @@ class DailyRateThrottle(BaseThrottle):
         self.num_requests = count
         return count
 
+    def decrement_counter(self, view: APIView) -> None:
+        """
+        Manually decrement the counter when a server exception occurs.
+        """
+        scope = self.get_scope(view)
+        cache_key = self.build_cache_key(scope)
+        ttl = _seconds_until_midnight()
+
+        try:
+            count = cache.decr(cache_key)
+            if count < 0:
+                cache.set(cache_key, 0, timeout=ttl)
+        except ValueError:
+            # Fallback for cache backends without decr
+            count = cast(int, cache.get(cache_key, 0))
+            cache.set(cache_key, max(0, count - 1), timeout=ttl)
+
     def wait(self) -> Optional[int]:
         """
         Return the time (in seconds) until the throttle resets.

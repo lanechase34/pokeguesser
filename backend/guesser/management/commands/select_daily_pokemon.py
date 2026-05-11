@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 from datetime import datetime
+from typing import Any
 
 from django.core.management.base import BaseCommand
 from django.utils import timezone
@@ -17,7 +18,7 @@ class Command(BaseCommand):
             "--date", type=str, help="Date in YYYY-MM-DD format (defaults to today)"
         )
 
-    def handle(self, *args: str, **options: str) -> None:
+    def handle(self, *args: Any, **options: Any) -> None:
         try:
             target_date = (
                 datetime.strptime(options["date"], "%Y-%m-%d").date()
@@ -31,7 +32,7 @@ class Command(BaseCommand):
 
             self.stdout.write(
                 self.style.SUCCESS(
-                    f"Selected pokemon ID {daily_pokemon.pokemon}"
+                    f"Selected pokemon ID {daily_pokemon.pokemon} "
                     f"for {daily_pokemon.date}"
                 )
             )

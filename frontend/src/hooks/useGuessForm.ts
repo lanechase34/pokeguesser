@@ -7,15 +7,13 @@ import { validateGuess } from 'validators/validateGuess';
 type SubmitGuessFn = (guess: string) => Promise<GuessResponse>;
 
 interface UseGuessFormReturn {
-    /** The current value of the guess input */
     guess: string;
-    /** True when the last submission attempt failed validation, cleared on input change */
+    /** True after a failed submission, cleared when the input changes */
     hasValidationError: boolean;
-    /** Toast instance for displaying validation error messages */
+    /** Used to imperatively show validation messages */
     validationToast: UseToastReturn;
-    /** Validates and submits the current guess, showing a toast on validation failure */
+    /** Validates and submits the guess, shows a toast on failure */
     handleSubmit: () => Promise<void>;
-    /** Updates the guess value and clears any active validation error state */
     handleChange: (value: string) => void;
 }
 

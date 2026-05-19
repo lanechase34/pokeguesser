@@ -21,6 +21,7 @@ env_file = f".env.{ENV}"
 
 load_dotenv(env_file)
 
+IS_PRODUCTION = ENV == "prod"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -48,6 +49,16 @@ INSTALLED_APPS = [
     "audit",
     "guesser",
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
+    "DEFAULT_AUTHENTICATION_CLASSES": [],
+}
+
+# Non prod dependencies
+if not IS_PRODUCTION:
+    INSTALLED_APPS += ["drf_spectacular"]
+    REST_FRAMEWORK["DEFAULT_SCHEMA_CLASS"] = "drf_spectacular.openapi.AutoSchema"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -164,11 +175,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MAGICK_PATH = os.getenv("MAGICK_PATH", "")
 
-REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
-    "DEFAULT_AUTHENTICATION_CLASSES": [],
-}
-
 _cors_origins = os.getenv("CORS_ALLOWED_ORIGINS", "")
 CORS_ALLOWED_ORIGINS = [o.strip() for o in _cors_origins.split(",") if o.strip()]
 CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
@@ -199,4 +205,8 @@ LOGGING = {
             "propagate": False,
         },
     },
+}
+
+SPECTACULAR_SETTINGS = {
+    "SERVE_INCLUDE_SCHEMA": False,
 }

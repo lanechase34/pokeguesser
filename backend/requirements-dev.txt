@@ -1,4 +1,4 @@
-pre-commit==4.6.0
+drf-spectacular==0.29.0
 
 # Formatting + Linting
 isort==8.0.1

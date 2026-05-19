@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "oneOf": [
+        {
+            "title": "Correct guess",
+            "properties": {
+                "correct": { "type": "boolean", "enum": [true] },
+                "answer": { "$ref": "./pokemon.json" },
+                "attempt": { "type": "integer" }
+            },
+            "required": ["correct", "answer", "attempt"]
+        },
+        {
+            "title": "Incorrect guess with hint",
+            "properties": {
+                "correct": { "type": "boolean", "enum": [false] },
+                "attempt": { "type": "integer" },
+                "attempts_remaining": { "type": "integer" },
+                "hint": { "type": "object" }
+            },
+            "required": ["correct", "attempt", "attempts_remaining", "hint"]
+        }
+    ]
+}

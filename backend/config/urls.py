@@ -15,6 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from django.conf import settings
 from django.contrib import admin
 from django.http import HttpRequest, JsonResponse
 from django.urls import include, path
@@ -30,3 +31,21 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/v1/", include("guesser.urls")),
 ]
+
+# Swagger API doc generation
+if not settings.IS_PRODUCTION:
+    from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+
+    urlpatterns += [
+        path(
+            "api/v1/schema",
+            SpectacularAPIView.as_view(),
+            name="schema",
+            kwargs={"format": "json"},
+        ),
+        path(
+            "api/v1/schema/swaggerui",
+            SpectacularSwaggerView.as_view(url_name="schema"),
+            name="swagger-ui",
+        ),
+    ]
